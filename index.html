@@ -1,348 +1,573 @@
 <!DOCTYPE html>
 <html lang="uk">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
   <title>2К — Новинки 2026</title>
 
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,500;1,500&display=swap" rel="stylesheet">
+
   <style>
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
+    :root {
+      --ink: #151515;
+      --soft-ink: rgba(21, 21, 21, .58);
+      --line: rgba(21, 21, 21, .14);
     }
 
-    html, body {
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html,
+    body {
       width: 100%;
       height: 100%;
-      font-family: Arial, Helvetica, sans-serif;
-      background: #f4f5f3;
-      color: #111;
     }
 
     body {
       overflow: hidden;
+      background: #f7f4ef;
+      color: var(--ink);
+      font-family: "DM Sans", sans-serif;
     }
 
     .hero {
       position: relative;
       width: 100%;
-      height: 100vh;
-      min-height: 650px;
+      height: 100svh;
+      min-height: 700px;
       overflow: hidden;
+      isolation: isolate;
       background:
-        radial-gradient(circle at 50% 10%, rgba(255,255,255,.95), rgba(244,245,243,.55) 55%, rgba(235,237,236,.9) 100%);
+        linear-gradient(
+          118deg,
+          #fbfaf7 0%,
+          #f8f3ee 38%,
+          #f4f7f5 72%,
+          #eef8f8 100%
+        );
     }
 
-    /* ЖИВАЯ ЖИДКАЯ СРЕДА */
+    /* ---------- WEBGL FLUID ---------- */
 
-    .liquid {
+    #fluidCanvas {
       position: absolute;
-      inset: -15%;
-      filter: blur(55px);
-      opacity: .88;
-      transform: scale(1.15);
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 0;
+      opacity: .92;
+    }
+
+    .veil {
+      position: absolute;
+      inset: 0;
+      z-index: 1;
       pointer-events: none;
+
+      background:
+        linear-gradient(
+          90deg,
+          rgba(250,248,244,.92) 0%,
+          rgba(250,248,244,.74) 32%,
+          rgba(250,248,244,.15) 57%,
+          rgba(255,255,255,.04) 100%
+        );
     }
 
-    .blob {
+    .glow {
       position: absolute;
+      z-index: 2;
+      pointer-events: none;
+      filter: blur(70px);
+      opacity: .6;
       border-radius: 50%;
-      will-change: transform;
-      mix-blend-mode: multiply;
+      mix-blend-mode: screen;
     }
 
-    .blob-1 {
-      width: 38vw;
-      height: 38vw;
-      min-width: 420px;
-      min-height: 420px;
-      left: 6%;
-      top: 15%;
-      background:
-        radial-gradient(circle at 35% 30%,
-          rgba(255,255,255,.95) 0%,
-          rgba(255,90,115,.72) 18%,
-          rgba(232,30,70,.82) 55%,
-          rgba(232,30,70,.05) 75%);
-      animation: moveOne 13s ease-in-out infinite alternate;
+    .glow-one {
+      width: 500px;
+      height: 500px;
+      right: 11%;
+      top: 5%;
+      background: rgba(255, 177, 202, .38);
     }
 
-    .blob-2 {
-      width: 42vw;
-      height: 42vw;
-      min-width: 460px;
-      min-height: 460px;
-      right: 4%;
-      top: -2%;
-      background:
-        radial-gradient(circle at 40% 35%,
-          rgba(255,255,255,.9) 0%,
-          rgba(51,224,232,.8) 22%,
-          rgba(0,157,177,.7) 54%,
-          rgba(0,157,177,.03) 76%);
-      animation: moveTwo 15s ease-in-out infinite alternate;
+    .glow-two {
+      width: 560px;
+      height: 560px;
+      right: -4%;
+      bottom: -8%;
+      background: rgba(80, 227, 230, .31);
     }
 
-    .blob-3 {
-      width: 34vw;
-      height: 34vw;
-      min-width: 380px;
-      min-height: 380px;
-      left: 39%;
-      bottom: -12%;
-      background:
-        radial-gradient(circle at 45% 35%,
-          rgba(255,255,255,.95) 0%,
-          rgba(226,204,102,.65) 22%,
-          rgba(197,149,44,.56) 52%,
-          rgba(197,149,44,.02) 76%);
-      animation: moveThree 17s ease-in-out infinite alternate;
+    .glow-three {
+      width: 430px;
+      height: 430px;
+      right: 33%;
+      bottom: -17%;
+      background: rgba(255, 220, 138, .27);
     }
 
-    .blob-4 {
-      width: 25vw;
-      height: 25vw;
-      min-width: 300px;
-      min-height: 300px;
-      right: 24%;
-      bottom: 0%;
-      background:
-        radial-gradient(circle,
-          rgba(255,255,255,.9) 0%,
-          rgba(157,216,178,.68) 32%,
-          rgba(89,175,119,.42) 58%,
-          rgba(89,175,119,0) 78%);
-      animation: moveFour 11s ease-in-out infinite alternate;
-    }
+    /* ---------- BUBBLES ---------- */
 
-    @keyframes moveOne {
-      0%   { transform: translate3d(-4%, 0, 0) scale(1); }
-      45%  { transform: translate3d(16%, -8%, 0) scale(1.18); }
-      100% { transform: translate3d(8%, 18%, 0) scale(.92); }
-    }
-
-    @keyframes moveTwo {
-      0%   { transform: translate3d(0, 0, 0) scale(.95); }
-      50%  { transform: translate3d(-18%, 12%, 0) scale(1.12); }
-      100% { transform: translate3d(-6%, 26%, 0) scale(1); }
-    }
-
-    @keyframes moveThree {
-      0%   { transform: translate3d(0, 0, 0) scale(1); }
-      50%  { transform: translate3d(-18%, -14%, 0) scale(1.2); }
-      100% { transform: translate3d(16%, -8%, 0) scale(.95); }
-    }
-
-    @keyframes moveFour {
-      0%   { transform: translate3d(0, 0, 0) scale(.9); }
-      100% { transform: translate3d(-30%, -18%, 0) scale(1.25); }
-    }
-
-    /* БЛИКИ / ПУЗЫРЬКИ */
-
-    .bubble {
-      position: absolute;
-      border: 1px solid rgba(255,255,255,.6);
-      background: rgba(255,255,255,.12);
-      box-shadow:
-        inset 0 0 25px rgba(255,255,255,.32),
-        0 5px 30px rgba(255,255,255,.25);
-      backdrop-filter: blur(3px);
-      border-radius: 50%;
-      opacity: .55;
-      animation: floatBubble 8s ease-in-out infinite alternate;
-    }
-
-    .b1 {
-      width: 110px;
-      height: 110px;
-      right: 15%;
-      top: 18%;
-    }
-
-    .b2 {
-      width: 48px;
-      height: 48px;
-      right: 31%;
-      top: 11%;
-      animation-delay: -2s;
-    }
-
-    .b3 {
-      width: 76px;
-      height: 76px;
-      left: 21%;
-      bottom: 14%;
-      animation-delay: -4s;
-    }
-
-    @keyframes floatBubble {
-      from { transform: translateY(20px) scale(.95); }
-      to   { transform: translateY(-25px) scale(1.07); }
-    }
-
-    /* КОНТЕНТ */
-
-    .topline {
-      position: absolute;
-      left: 5vw;
-      right: 5vw;
-      top: 38px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      z-index: 10;
-      font-size: 13px;
-      font-weight: 700;
-      letter-spacing: .14em;
-      text-transform: uppercase;
-    }
-
-    .logo {
-      font-size: 25px;
-      letter-spacing: -.03em;
-      font-weight: 900;
-    }
-
-    .year {
-      opacity: .55;
-    }
-
-    .content {
-      position: absolute;
-      z-index: 10;
-      left: 5vw;
-      top: 50%;
-      transform: translateY(-46%);
-      width: min(1030px, 86vw);
-    }
-
-    .eyebrow {
-      margin-bottom: 22px;
-      font-size: 14px;
-      font-weight: 700;
-      letter-spacing: .18em;
-      text-transform: uppercase;
-      opacity: .62;
-    }
-
-    h1 {
-      max-width: 1050px;
-      font-size: clamp(58px, 7.6vw, 138px);
-      line-height: .86;
-      letter-spacing: -.065em;
-      font-weight: 800;
-      text-transform: uppercase;
-    }
-
-    .accent {
-      display: inline-block;
-      font-weight: 300;
-      font-style: italic;
-    }
-
-    .bottom-copy {
-      position: absolute;
-      left: 5vw;
-      right: 5vw;
-      bottom: 42px;
-      z-index: 10;
-      display: flex;
-      align-items: flex-end;
-      justify-content: space-between;
-      gap: 30px;
-    }
-
-    .subtitle {
-      max-width: 540px;
-      font-size: clamp(16px, 1.35vw, 23px);
-      line-height: 1.45;
-      font-weight: 400;
-    }
-
-    .brands {
-      display: flex;
-      gap: 9px;
-      flex-wrap: wrap;
-      justify-content: flex-end;
-    }
-
-    .brand {
-      border: 1px solid rgba(0,0,0,.22);
-      border-radius: 999px;
-      padding: 10px 16px;
-      font-size: 11px;
-      letter-spacing: .08em;
-      font-weight: 700;
-      background: rgba(255,255,255,.25);
-      backdrop-filter: blur(7px);
-    }
-
-    .scroll {
-      position: absolute;
-      right: 5vw;
-      top: 50%;
-      z-index: 10;
-      writing-mode: vertical-rl;
-      font-size: 10px;
-      text-transform: uppercase;
-      letter-spacing: .18em;
-      opacity: .45;
-      animation: pulse 2s ease-in-out infinite;
-    }
-
-    @keyframes pulse {
-      0%,100% { transform: translateY(-50%); opacity: .35; }
-      50% { transform: translateY(-44%); opacity: .75; }
-    }
-
-    /* МЕЛКАЯ ФАКТУРА */
-
-    .noise {
+    .bubble-field {
       position: absolute;
       inset: 0;
       z-index: 5;
-      opacity: .055;
       pointer-events: none;
-      background-image:
-        repeating-radial-gradient(
-          circle at 0 0,
-          transparent 0,
-          rgba(0,0,0,.35) .7px,
-          transparent 1.4px
-        );
-      background-size: 5px 5px;
     }
 
-    @media (max-width: 800px) {
+    .bubble {
+      position: absolute;
+      border-radius: 50%;
+      overflow: hidden;
+
+      background:
+        radial-gradient(
+          circle at 32% 27%,
+          rgba(255,255,255,.94) 0%,
+          rgba(255,255,255,.32) 8%,
+          rgba(255,255,255,.07) 25%,
+          rgba(255,255,255,.02) 48%,
+          rgba(255,255,255,.14) 72%,
+          rgba(255,255,255,.35) 100%
+        );
+
+      border: 1px solid rgba(255,255,255,.58);
+
+      box-shadow:
+        inset -18px -18px 40px rgba(41, 193, 210, .12),
+        inset 16px 15px 32px rgba(255, 129, 174, .10),
+        inset 0 0 0 1px rgba(255,255,255,.22),
+        0 26px 65px rgba(28, 64, 75, .11);
+
+      backdrop-filter: blur(3px) saturate(150%);
+      -webkit-backdrop-filter: blur(3px) saturate(150%);
+
+      will-change: transform;
+    }
+
+    .bubble::before {
+      content: "";
+      position: absolute;
+      inset: 4%;
+      border-radius: inherit;
+
+      background:
+        conic-gradient(
+          from 120deg,
+          rgba(255,100,170,.12),
+          rgba(255,218,118,.14),
+          rgba(108,245,222,.17),
+          rgba(119,176,255,.14),
+          rgba(202,142,255,.13),
+          rgba(255,100,170,.12)
+        );
+
+      filter: blur(9px);
+      mix-blend-mode: screen;
+    }
+
+    .bubble::after {
+      content: "";
+      position: absolute;
+      width: 34%;
+      height: 18%;
+      left: 18%;
+      top: 13%;
+      border-radius: 50%;
+      transform: rotate(-28deg);
+      background: rgba(255,255,255,.65);
+      filter: blur(8px);
+    }
+
+    .bubble-a {
+      width: 270px;
+      height: 270px;
+      right: 7%;
+      top: 10%;
+      animation: driftA 12s ease-in-out infinite alternate;
+    }
+
+    .bubble-b {
+      width: 112px;
+      height: 112px;
+      right: 35%;
+      top: 16%;
+      animation: driftB 10s ease-in-out infinite alternate;
+    }
+
+    .bubble-c {
+      width: 170px;
+      height: 170px;
+      right: 25%;
+      bottom: 8%;
+      animation: driftC 14s ease-in-out infinite alternate;
+    }
+
+    .bubble-d {
+      width: 68px;
+      height: 68px;
+      right: 6%;
+      bottom: 21%;
+      animation: driftD 8s ease-in-out infinite alternate;
+    }
+
+    .bubble-e {
+      width: 45px;
+      height: 45px;
+      right: 44%;
+      top: 33%;
+      animation: driftB 9s ease-in-out infinite alternate-reverse;
+    }
+
+    @keyframes driftA {
+      0% {
+        transform: translate3d(0, 8px, 0) rotate(0deg);
+      }
+      100% {
+        transform: translate3d(-24px, -28px, 0) rotate(5deg);
+      }
+    }
+
+    @keyframes driftB {
+      0% {
+        transform: translate3d(0, 0, 0) scale(.96);
+      }
+      100% {
+        transform: translate3d(20px, -30px, 0) scale(1.05);
+      }
+    }
+
+    @keyframes driftC {
+      0% {
+        transform: translate3d(0, 0, 0);
+      }
+      100% {
+        transform: translate3d(-35px, 18px, 0);
+      }
+    }
+
+    @keyframes driftD {
+      0% {
+        transform: translateY(0);
+      }
+      100% {
+        transform: translateY(-38px);
+      }
+    }
+
+    /* ---------- HEADER ---------- */
+
+    .header {
+      position: absolute;
+      z-index: 20;
+      left: 4.4vw;
+      right: 4.4vw;
+      top: 34px;
+
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+    }
+
+    .company-logo {
+      width: 84px;
+      height: auto;
+      display: block;
+    }
+
+    .header-meta {
+      display: flex;
+      align-items: center;
+      gap: 28px;
+      padding-top: 11px;
+
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: .19em;
+      text-transform: uppercase;
+      color: rgba(18,18,18,.60);
+    }
+
+    /* ---------- HERO COPY ---------- */
+
+    .copy {
+      position: absolute;
+      z-index: 20;
+      left: 4.4vw;
+      top: 50%;
+      transform: translateY(-48%);
+      width: min(665px, 47vw);
+    }
+
+    .kicker {
+      margin-bottom: 25px;
+
+      font-size: 12px;
+      font-weight: 500;
+      letter-spacing: .22em;
+      text-transform: uppercase;
+      color: var(--soft-ink);
+    }
+
+    .title {
+      font-family: "Playfair Display", serif;
+      font-size: clamp(80px, 8.1vw, 146px);
+      font-weight: 500;
+      line-height: .78;
+      letter-spacing: -.055em;
+    }
+
+    .title .edition {
+      display: block;
+      margin-left: 10px;
+      font-style: italic;
+      font-weight: 500;
+      color: rgba(21,21,21,.88);
+    }
+
+    .title .year {
+      display: block;
+      margin-top: 6px;
+      font-family: "DM Sans", sans-serif;
+      font-size: .50em;
+      line-height: 1;
+      font-weight: 300;
+      letter-spacing: -.045em;
+    }
+
+    .descriptor {
+      margin-top: 34px;
+      width: 360px;
+
+      font-size: 16px;
+      line-height: 1.55;
+      font-weight: 300;
+      color: rgba(21,21,21,.62);
+    }
+
+    /* ---------- BRAND PORTFOLIO ---------- */
+
+    .brands {
+      position: absolute;
+      z-index: 20;
+      right: 4.4vw;
+      bottom: 44px;
+
+      display: flex;
+      align-items: center;
+      gap: 28px;
+    }
+
+    .brand-logo {
+      position: relative;
+      height: 31px;
+      width: auto;
+      object-fit: contain;
+      opacity: .76;
+      filter: saturate(.92);
+      transition:
+        transform .5s ease,
+        opacity .5s ease,
+        filter .5s ease;
+    }
+
+    .brand-logo.galax {
+      height: 33px;
+    }
+
+    .brand-logo.washfree {
+      height: 38px;
+    }
+
+    .brand-logo:hover {
+      opacity: 1;
+      transform: translateY(-3px);
+      filter: saturate(1.1);
+    }
+
+    .brand-separator {
+      width: 1px;
+      height: 32px;
+      background: rgba(20,20,20,.16);
+    }
+
+    /* ---------- MICRO UI ---------- */
+
+    .side-note {
+      position: absolute;
+      z-index: 20;
+      right: 4.4vw;
+      top: 50%;
+      transform: translateY(-50%);
+
+      writing-mode: vertical-rl;
+
+      font-size: 10px;
+      font-weight: 500;
+      letter-spacing: .24em;
+      text-transform: uppercase;
+      color: rgba(20,20,20,.42);
+    }
+
+    .scroll-note {
+      position: absolute;
+      z-index: 20;
+      left: 4.4vw;
+      bottom: 45px;
+
+      display: flex;
+      align-items: center;
+      gap: 14px;
+
+      font-size: 10px;
+      font-weight: 500;
+      letter-spacing: .20em;
+      text-transform: uppercase;
+      color: rgba(20,20,20,.45);
+    }
+
+    .scroll-line {
+      width: 52px;
+      height: 1px;
+      background: rgba(20,20,20,.28);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .scroll-line::after {
+      content: "";
+      position: absolute;
+      width: 19px;
+      height: 1px;
+      left: -19px;
+      top: 0;
+      background: #181818;
+      animation: lineMove 2.2s ease-in-out infinite;
+    }
+
+    @keyframes lineMove {
+      0% {
+        transform: translateX(0);
+      }
+      100% {
+        transform: translateX(80px);
+      }
+    }
+
+    /* ---------- GRAIN ---------- */
+
+    .grain {
+      position: absolute;
+      z-index: 10;
+      inset: 0;
+      pointer-events: none;
+      opacity: .055;
+
+      background-image:
+        url("data:image/svg+xml,%3Csvg viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.34'/%3E%3C/svg%3E");
+    }
+
+    /* ---------- MOBILE ---------- */
+
+    @media (max-width: 900px) {
+
       .hero {
         min-height: 100svh;
       }
 
-      h1 {
-        font-size: clamp(54px, 16vw, 92px);
-        line-height: .9;
+      .header {
+        top: 22px;
       }
 
-      .content {
-        top: 45%;
+      .company-logo {
+        width: 64px;
       }
 
-      .bottom-copy {
-        display: block;
+      .header-meta span:first-child {
+        display: none;
+      }
+
+      .copy {
+        left: 7vw;
+        top: 47%;
+        width: 86vw;
+      }
+
+      .title {
+        font-size: clamp(66px, 18vw, 105px);
+      }
+
+      .descriptor {
+        width: min(340px, 80vw);
+        font-size: 14px;
+      }
+
+      .veil {
+        background:
+          linear-gradient(
+            180deg,
+            rgba(250,248,244,.68) 0%,
+            rgba(250,248,244,.42) 42%,
+            rgba(250,248,244,.15) 100%
+          );
+      }
+
+      .bubble-a {
+        width: 190px;
+        height: 190px;
+        right: -35px;
+        top: 10%;
+      }
+
+      .bubble-b {
+        right: 7%;
+        top: 30%;
+      }
+
+      .bubble-c {
+        right: 10%;
+        bottom: 13%;
+      }
+
+      .bubble-e {
+        display: none;
       }
 
       .brands {
-        justify-content: flex-start;
-        margin-top: 22px;
+        right: 7vw;
+        bottom: 25px;
+        gap: 16px;
       }
 
-      .scroll {
+      .brand-logo.galax {
+        height: 24px;
+      }
+
+      .brand-logo.washfree {
+        height: 29px;
+      }
+
+      .brand-separator {
+        height: 24px;
+      }
+
+      .scroll-note {
+        left: 7vw;
+        bottom: 27px;
+      }
+
+      .side-note {
         display: none;
       }
     }
-
   </style>
 </head>
 
@@ -350,70 +575,654 @@
 
   <main class="hero" id="hero">
 
-    <div class="liquid" id="liquid">
-      <div class="blob blob-1"></div>
-      <div class="blob blob-2"></div>
-      <div class="blob blob-3"></div>
-      <div class="blob blob-4"></div>
+    <canvas id="fluidCanvas"></canvas>
+
+    <div class="veil"></div>
+
+    <div class="glow glow-one"></div>
+    <div class="glow glow-two"></div>
+    <div class="glow glow-three"></div>
+
+    <div class="bubble-field" id="bubbleField">
+      <div class="bubble bubble-a"></div>
+      <div class="bubble bubble-b"></div>
+      <div class="bubble bubble-c"></div>
+      <div class="bubble bubble-d"></div>
+      <div class="bubble bubble-e"></div>
     </div>
 
-    <div class="bubble b1"></div>
-    <div class="bubble b2"></div>
-    <div class="bubble b3"></div>
+    <div class="grain"></div>
 
-    <div class="noise"></div>
+    <header class="header">
 
-    <header class="topline">
-      <div class="logo">2К</div>
-      <div class="year">NEW PRODUCTS · 2026</div>
+      <img
+        class="company-logo"
+        src="assets/2K_logo%20(7).png"
+        alt="2K"
+      />
+
+      <div class="header-meta">
+        <span>House Care</span>
+        <span>New Products · 2026</span>
+      </div>
+
     </header>
 
-    <section class="content">
-      <div class="eyebrow">Побутова хімія · Новинки 2026</div>
+    <section class="copy">
 
-      <h1>
-        НОВЕ,<br>
-        ЩО ХОЧЕТЬСЯ<br>
-        <span class="accent">ПОБАЧИТИ</span><br>
-        НА ПОЛИЦІ
+      <div class="kicker">
+        Нова колекція продуктів
+      </div>
+
+      <h1 class="title">
+        Новинки
+        <span class="edition">house care</span>
+        <span class="year">2026</span>
       </h1>
+
+      <p class="descriptor">
+        Нові продукти та нові аромати
+        у портфелі знайомих брендів.
+      </p>
+
     </section>
 
-    <div class="bottom-copy">
-      <div class="subtitle">
-        Нові продукти. Нові аромати. Нові приводи
-        обирати знайомі бренди.
-      </div>
-
-      <div class="brands">
-        <div class="brand">GALAX</div>
-        <div class="brand">GALAX LUX</div>
-        <div class="brand">WASH&amp;FREE</div>
-        <div class="brand">LIMITED EDITION</div>
-      </div>
+    <div class="side-note">
+      рух · вода · світло
     </div>
 
-    <div class="scroll">рухай мишкою</div>
+    <div class="scroll-note">
+      <span class="scroll-line"></span>
+      <span>далі</span>
+    </div>
+
+    <div class="brands">
+
+      <img
+        class="brand-logo galax"
+        src="assets/galax-logo.png"
+        alt="Galax"
+      />
+
+      <span class="brand-separator"></span>
+
+      <img
+        class="brand-logo washfree"
+        src="assets/washfree-logo.png"
+        alt="Wash & Free"
+      />
+
+    </div>
 
   </main>
 
 
   <script>
-    const hero = document.getElementById('hero');
-    const liquid = document.getElementById('liquid');
+    /* =========================================================
+       WEBGL PEARLESCENT LIQUID
+       ========================================================= */
 
-    hero.addEventListener('mousemove', (e) => {
-      const x = (e.clientX / window.innerWidth - 0.5) * 18;
-      const y = (e.clientY / window.innerHeight - 0.5) * 18;
+    const canvas = document.getElementById("fluidCanvas");
+    const gl =
+      canvas.getContext("webgl", { antialias: true, alpha: true }) ||
+      canvas.getContext("experimental-webgl");
 
-      liquid.style.transform =
-        `translate3d(${x}px, ${y}px, 0) scale(1.15)`;
-    });
+    if (!gl) {
+      canvas.style.display = "none";
+    }
 
-    hero.addEventListener('mouseleave', () => {
-      liquid.style.transform =
-        'translate3d(0,0,0) scale(1.15)';
-    });
+    const vertexShaderSource = `
+      attribute vec2 position;
+
+      void main() {
+        gl_Position = vec4(position, 0.0, 1.0);
+      }
+    `;
+
+    const fragmentShaderSource = `
+      precision highp float;
+
+      uniform vec2 u_resolution;
+      uniform float u_time;
+      uniform vec2 u_mouse;
+
+      #define PI 3.14159265359
+
+
+      float hash(vec2 p) {
+        p = fract(p * vec2(123.34, 456.21));
+        p += dot(p, p + 45.32);
+        return fract(p.x * p.y);
+      }
+
+
+      float noise(vec2 p) {
+        vec2 i = floor(p);
+        vec2 f = fract(p);
+
+        f = f * f * (3.0 - 2.0 * f);
+
+        float a = hash(i);
+        float b = hash(i + vec2(1.0, 0.0));
+        float c = hash(i + vec2(0.0, 1.0));
+        float d = hash(i + vec2(1.0, 1.0));
+
+        return mix(
+          mix(a, b, f.x),
+          mix(c, d, f.x),
+          f.y
+        );
+      }
+
+
+      float fbm(vec2 p) {
+        float value = 0.0;
+        float amp = 0.5;
+
+        for (int i = 0; i < 6; i++) {
+          value += amp * noise(p);
+          p *= 2.02;
+          amp *= 0.50;
+        }
+
+        return value;
+      }
+
+
+      vec3 palette(float t) {
+
+        vec3 a = vec3(.78, .79, .78);
+        vec3 b = vec3(.22, .20, .22);
+        vec3 c = vec3(1.0, 1.0, 1.0);
+
+        vec3 d = vec3(
+          .00,
+          .18,
+          .44
+        );
+
+        return a + b * cos(6.28318 * (c * t + d));
+      }
+
+
+      void main() {
+
+        vec2 uv = gl_FragCoord.xy / u_resolution.xy;
+
+        vec2 p = uv - .5;
+        p.x *= u_resolution.x / u_resolution.y;
+
+        float t = u_time * .055;
+
+        vec2 mouse = u_mouse - .5;
+        mouse.x *= u_resolution.x / u_resolution.y;
+
+        float mouseDist = length(p - mouse * .55);
+
+        vec2 flow = p;
+
+        flow.x += sin(
+          flow.y * 3.1 +
+          t * 1.7
+        ) * .18;
+
+        flow.y += cos(
+          flow.x * 2.4 -
+          t * 1.2
+        ) * .13;
+
+        float n1 =
+          fbm(
+            flow * 1.55 +
+            vec2(t * .22, -t * .15)
+          );
+
+        float n2 =
+          fbm(
+            flow * 2.30 -
+            vec2(t * .18, t * .13)
+          );
+
+        float n3 =
+          fbm(
+            flow * 4.20 +
+            vec2(-t * .08, t * .14)
+          );
+
+        float liquid =
+          n1 * .56 +
+          n2 * .30 +
+          n3 * .14;
+
+        liquid +=
+          sin(
+            p.x * 3.8 +
+            p.y * 4.7 +
+            t * 3.2
+          ) * .08;
+
+        liquid +=
+          (1.0 - smoothstep(
+            .0,
+            .62,
+            mouseDist
+          )) * .06;
+
+        vec3 color =
+          palette(
+            liquid * .86 +
+            p.y * .12 +
+            t * .10
+          );
+
+        vec3 blush =
+          vec3(
+            1.00,
+            .74,
+            .80
+          );
+
+        vec3 aqua =
+          vec3(
+            .48,
+            .92,
+            .93
+          );
+
+        vec3 champagne =
+          vec3(
+            .98,
+            .88,
+            .65
+          );
+
+        float pinkMask =
+          smoothstep(
+            .05,
+            .70,
+            1.0 - length(
+              p - vec2(.18, .06)
+            )
+          );
+
+        float aquaMask =
+          smoothstep(
+            .04,
+            .82,
+            1.0 - length(
+              p - vec2(.55, -.03)
+            )
+          );
+
+        float goldMask =
+          smoothstep(
+            .05,
+            .75,
+            1.0 - length(
+              p - vec2(.16, -.55)
+            )
+          );
+
+        color =
+          mix(
+            color,
+            blush,
+            pinkMask * .31
+          );
+
+        color =
+          mix(
+            color,
+            aqua,
+            aquaMask * .37
+          );
+
+        color =
+          mix(
+            color,
+            champagne,
+            goldMask * .26
+          );
+
+
+        float ridges =
+          abs(
+            sin(
+              liquid * 9.3 +
+              p.x * 1.8 -
+              p.y * 1.3
+            )
+          );
+
+        ridges =
+          pow(
+            ridges,
+            10.0
+          );
+
+        color +=
+          vec3(
+            1.0,
+            .97,
+            .91
+          ) * ridges * .25;
+
+
+        float vignette =
+          smoothstep(
+            1.18,
+            .17,
+            length(p * vec2(.75, 1.0))
+          );
+
+        color =
+          mix(
+            vec3(.97, .96, .94),
+            color,
+            .76
+          );
+
+        color +=
+          vignette * .055;
+
+        gl_FragColor =
+          vec4(
+            color,
+            .92
+          );
+      }
+    `;
+
+
+    function createShader(type, source) {
+
+      const shader = gl.createShader(type);
+
+      gl.shaderSource(shader, source);
+
+      gl.compileShader(shader);
+
+      if (!gl.getShaderParameter(shader, gl.COMPILE_STATUS)) {
+        console.error(
+          gl.getShaderInfoLog(shader)
+        );
+      }
+
+      return shader;
+    }
+
+
+    if (gl) {
+
+      const vertexShader =
+        createShader(
+          gl.VERTEX_SHADER,
+          vertexShaderSource
+        );
+
+      const fragmentShader =
+        createShader(
+          gl.FRAGMENT_SHADER,
+          fragmentShaderSource
+        );
+
+      const program =
+        gl.createProgram();
+
+      gl.attachShader(
+        program,
+        vertexShader
+      );
+
+      gl.attachShader(
+        program,
+        fragmentShader
+      );
+
+      gl.linkProgram(program);
+
+      gl.useProgram(program);
+
+
+      const vertices =
+        new Float32Array([
+          -1, -1,
+           1, -1,
+          -1,  1,
+          -1,  1,
+           1, -1,
+           1,  1
+        ]);
+
+
+      const buffer =
+        gl.createBuffer();
+
+      gl.bindBuffer(
+        gl.ARRAY_BUFFER,
+        buffer
+      );
+
+      gl.bufferData(
+        gl.ARRAY_BUFFER,
+        vertices,
+        gl.STATIC_DRAW
+      );
+
+
+      const position =
+        gl.getAttribLocation(
+          program,
+          "position"
+        );
+
+      gl.enableVertexAttribArray(
+        position
+      );
+
+      gl.vertexAttribPointer(
+        position,
+        2,
+        gl.FLOAT,
+        false,
+        0,
+        0
+      );
+
+
+      const resolutionLocation =
+        gl.getUniformLocation(
+          program,
+          "u_resolution"
+        );
+
+      const timeLocation =
+        gl.getUniformLocation(
+          program,
+          "u_time"
+        );
+
+      const mouseLocation =
+        gl.getUniformLocation(
+          program,
+          "u_mouse"
+        );
+
+
+      let mouseX = .76;
+      let mouseY = .46;
+
+      let targetMouseX = mouseX;
+      let targetMouseY = mouseY;
+
+
+      function resize() {
+
+        const pixelRatio =
+          Math.min(
+            window.devicePixelRatio || 1,
+            1.7
+          );
+
+        const width =
+          Math.floor(
+            window.innerWidth *
+            pixelRatio
+          );
+
+        const height =
+          Math.floor(
+            window.innerHeight *
+            pixelRatio
+          );
+
+        if (
+          canvas.width !== width ||
+          canvas.height !== height
+        ) {
+
+          canvas.width = width;
+          canvas.height = height;
+
+          gl.viewport(
+            0,
+            0,
+            width,
+            height
+          );
+        }
+      }
+
+
+      window.addEventListener(
+        "resize",
+        resize
+      );
+
+
+      window.addEventListener(
+        "mousemove",
+        (event) => {
+
+          targetMouseX =
+            event.clientX /
+            window.innerWidth;
+
+          targetMouseY =
+            1.0 -
+            event.clientY /
+            window.innerHeight;
+        }
+      );
+
+
+      resize();
+
+
+      const start =
+        performance.now();
+
+
+      function render(now) {
+
+        mouseX +=
+          (targetMouseX - mouseX) *
+          .035;
+
+        mouseY +=
+          (targetMouseY - mouseY) *
+          .035;
+
+
+        const time =
+          (now - start) /
+          1000;
+
+
+        gl.uniform2f(
+          resolutionLocation,
+          canvas.width,
+          canvas.height
+        );
+
+        gl.uniform1f(
+          timeLocation,
+          time
+        );
+
+        gl.uniform2f(
+          mouseLocation,
+          mouseX,
+          mouseY
+        );
+
+
+        gl.drawArrays(
+          gl.TRIANGLES,
+          0,
+          6
+        );
+
+
+        requestAnimationFrame(
+          render
+        );
+      }
+
+
+      requestAnimationFrame(
+        render
+      );
+    }
+
+
+    /* =========================================================
+       SUBTLE PARALLAX
+       ========================================================= */
+
+    const hero =
+      document.getElementById(
+        "hero"
+      );
+
+    const bubbleField =
+      document.getElementById(
+        "bubbleField"
+      );
+
+
+    hero.addEventListener(
+      "mousemove",
+      (event) => {
+
+        const x =
+          event.clientX /
+          window.innerWidth -
+          .5;
+
+        const y =
+          event.clientY /
+          window.innerHeight -
+          .5;
+
+        bubbleField.style.transform =
+          `translate3d(
+            ${x * -11}px,
+            ${y * -9}px,
+            0
+          )`;
+      }
+    );
+
+
+    hero.addEventListener(
+      "mouseleave",
+      () => {
+
+        bubbleField.style.transform =
+          "translate3d(0,0,0)";
+      }
+    );
   </script>
 
 </body>
