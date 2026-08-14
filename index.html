@@ -8,9 +8,14 @@
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600&family=Playfair+Display:wght@400;500&display=swap" rel="stylesheet">
+
+  <link
+    href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600&family=Playfair+Display:wght@400;500&display=swap"
+    rel="stylesheet"
+  >
 
   <style>
+
     * {
       box-sizing: border-box;
       margin: 0;
@@ -20,7 +25,7 @@
     html,
     body {
       width: 100%;
-      height: 100%;
+      min-height: 100%;
     }
 
     body {
@@ -41,10 +46,13 @@
       min-height: 720px;
       overflow: hidden;
       isolation: isolate;
-      background: #edf6fb;
+      background: #eaf5fb;
     }
 
-    /* Исходный Laundry-визуал */
+    /* =========================================================
+       ФОТО
+       ========================================================= */
+
     .hero-photo {
       position: absolute;
       inset: -1.5%;
@@ -54,110 +62,130 @@
       background-size: cover;
       background-position: 58% center;
 
-      filter: saturate(1.06) contrast(1.015);
       transform: scale(1.025);
 
-      animation: photoBreath 15s ease-in-out infinite alternate;
+      filter:
+        saturate(1.04)
+        contrast(1.015)
+        brightness(1.015);
+
+      animation:
+        photoBreath 15s ease-in-out infinite alternate;
+
       will-change: transform;
     }
 
     @keyframes photoBreath {
+
       from {
-        transform: scale(1.025) translate3d(0,0,0);
+        transform:
+          scale(1.025)
+          translate3d(0, 0, 0);
       }
 
       to {
-        transform: scale(1.055) translate3d(-0.4%,-0.25%,0);
+        transform:
+          scale(1.055)
+          translate3d(-0.45%, -0.25%, 0);
       }
     }
 
     /* =========================================================
-       СВЕТЛАЯ ЗОНА СЛЕВА
-       Закрывает старые белые надписи внутри hero-laundry.png
+       ЛЕВАЯ СВЕТЛАЯ АТМОСФЕРА
+       КАПЕЛЬКУ ПРОЗРАЧНАЯ
        ========================================================= */
 
-    .left-mask {
+    .left-atmosphere {
       position: absolute;
-      z-index: 2;
       inset: 0 auto 0 0;
+      z-index: 2;
 
-      width: 45.5vw;
-      min-width: 630px;
+      width: 43vw;
+      min-width: 600px;
+
+      pointer-events: none;
 
       background:
         linear-gradient(
           90deg,
-          rgba(239,248,252,1) 0%,
-          rgba(238,248,252,.99) 54%,
-          rgba(235,246,252,.92) 73%,
-          rgba(231,244,251,.50) 88%,
-          rgba(231,244,251,0) 100%
+          rgba(241,249,253,.94) 0%,
+          rgba(239,248,253,.88) 48%,
+          rgba(235,246,252,.67) 72%,
+          rgba(230,244,251,.24) 91%,
+          rgba(230,244,251,0) 100%
         );
-
-      pointer-events: none;
     }
 
-    .left-mask::after {
+    .left-atmosphere::after {
       content: "";
       position: absolute;
       inset: 0;
 
       background:
         radial-gradient(
-          circle at 20% 35%,
-          rgba(255,255,255,.70),
-          transparent 47%
+          circle at 17% 38%,
+          rgba(255,255,255,.46),
+          transparent 49%
         );
     }
 
     /* =========================================================
-       ИГРА СВЕТА
+       СВЕТ
        ========================================================= */
 
-    .light {
+    .light-layer {
       position: absolute;
       inset: 0;
       z-index: 4;
+
       overflow: hidden;
       pointer-events: none;
+
       mix-blend-mode: screen;
     }
 
-    .light::before {
+    .light-layer::before {
       content: "";
+
       position: absolute;
 
-      width: 45vw;
-      height: 135vh;
+      width: 48vw;
+      height: 130vh;
 
-      left: 47vw;
-      top: -25vh;
-
-      transform: rotate(8deg);
+      left: 43vw;
+      top: -22vh;
 
       background:
         linear-gradient(
-          110deg,
-          transparent 20%,
-          rgba(255,255,255,.05) 34%,
-          rgba(255,255,255,.46) 49%,
-          rgba(176,227,255,.17) 57%,
+          112deg,
+          transparent 19%,
+          rgba(255,255,255,.03) 34%,
+          rgba(255,255,255,.34) 49%,
+          rgba(184,230,255,.15) 57%,
           transparent 73%
         );
 
       filter: blur(17px);
 
-      animation: lightMove 8s ease-in-out infinite alternate;
+      animation:
+        lightSweep 8s ease-in-out infinite alternate;
     }
 
-    @keyframes lightMove {
+    @keyframes lightSweep {
+
       from {
-        transform: translateX(-7vw) rotate(8deg);
-        opacity: .45;
+        transform:
+          translateX(-7vw)
+          rotate(8deg);
+
+        opacity: .48;
       }
 
       to {
-        transform: translateX(11vw) rotate(8deg);
+        transform:
+          translateX(12vw)
+          rotate(8deg);
+
         opacity: .95;
       }
     }
@@ -169,69 +197,84 @@
     .content {
       position: relative;
       z-index: 20;
+
       width: 100%;
       height: 100%;
     }
 
-    /* настоящий 2K */
+    /* =========================================================
+       2K
+       ========================================================= */
+
     .logo-2k {
       position: absolute;
 
-      left: 4.8vw;
-      top: 5.1vh;
+      left: 4.65vw;
+      top: 4.5vh;
 
-      width: clamp(92px, 6.5vw, 126px);
+      width: clamp(92px, 6.4vw, 124px);
       height: auto;
 
       display: block;
       object-fit: contain;
 
-      filter: grayscale(1) brightness(0);
+      filter:
+        grayscale(1)
+        brightness(0);
     }
 
-    /* HOUSE CARE */
+    /* =========================================================
+       HOUSE CARE
+       ========================================================= */
+
     .category {
       position: absolute;
 
-      left: 4.8vw;
-      top: 36.5vh;
+      left: 4.65vw;
+      top: 35.6vh;
 
       display: flex;
       align-items: center;
       gap: 15px;
 
-      font-size: clamp(19px, 1.5vw, 28px);
+      white-space: nowrap;
+
+      font-size: clamp(22px, 1.72vw, 32px);
       line-height: 1;
 
       font-weight: 600;
-      letter-spacing: .18em;
+      letter-spacing: .175em;
 
       color: #111;
-
-      white-space: nowrap;
     }
 
-    .dot {
+    .category-dot {
       width: 6px;
       height: 6px;
 
+      flex: none;
+
       border-radius: 50%;
       background: #111;
-
-      flex: none;
     }
 
-    /* НОВИНКИ */
+    /* =========================================================
+       НОВИНКИ — ЧУТЬ МЕНЬШЕ
+       ========================================================= */
+
     .title {
       position: absolute;
 
-      left: 4.55vw;
-      top: 45.6vh;
+      left: 4.45vw;
+      top: 45.1vh;
 
-      font-family: "Playfair Display", Georgia, serif;
+      font-family:
+        "Playfair Display",
+        Georgia,
+        serif;
 
-      font-size: clamp(76px, 6.4vw, 122px);
-      line-height: .94;
+      font-size: clamp(67px, 5.7vw, 108px);
+      line-height: .95;
 
       font-weight: 400;
       letter-spacing: -.035em;
@@ -240,67 +283,68 @@
     }
 
     /* =========================================================
-       ЛИНИЯ + ЗВЕЗДА
+       РАЗДЕЛИТЕЛЬ
        ========================================================= */
 
     .ornament {
       position: absolute;
 
-      left: 4.8vw;
-      top: 61.7vh;
+      left: 4.65vw;
+      top: 60.8vh;
 
-      width: min(33vw, 625px);
+      width: min(32vw, 610px);
 
       display: flex;
       align-items: center;
-      gap: 16px;
+      gap: 15px;
     }
 
     .ornament-line {
-      height: 1px;
       flex: 1;
 
-      background: rgba(17,17,17,.84);
+      height: 1px;
+
+      background:
+        rgba(17,17,17,.82);
     }
 
     .ornament-star {
-      display: block;
-
-      font-size: 20px;
+      font-size: 18px;
       line-height: 1;
 
       color: #111;
     }
 
     /* =========================================================
-       ТРИ ФРАЗЫ — ОДНА СТРОКА
+       ПОДПИСЬ
        ========================================================= */
 
     .descriptor {
       position: absolute;
 
-      left: 4.8vw;
-      top: 66vh;
-
-      font-size: clamp(12px, 1vw, 18px);
-      font-weight: 500;
-
-      letter-spacing: .025em;
-
-      color: #111;
+      left: 4.65vw;
+      top: 65.3vh;
 
       white-space: nowrap;
+
+      font-size: clamp(12px, .97vw, 18px);
+      line-height: 1.2;
+
+      font-weight: 500;
+      letter-spacing: .02em;
+
+      color: #111;
     }
 
     /* =========================================================
-       БРЕНДЫ
+       ЛОГОТИПЫ
        ========================================================= */
 
     .brands {
       position: absolute;
 
-      left: 4.8vw;
-      top: 77.2vh;
+      left: 4.65vw;
+      top: 76.2vh;
 
       display: flex;
       align-items: center;
@@ -311,11 +355,11 @@
     .brand-wrap {
       position: relative;
 
+      height: 76px;
+
       display: flex;
       align-items: center;
       justify-content: center;
-
-      height: 76px;
     }
 
     .brand-wrap + .brand-wrap::before {
@@ -323,31 +367,38 @@
 
       position: absolute;
 
-      left: calc(clamp(25px, 2vw, 38px) / -2);
+      left:
+        calc(
+          clamp(25px, 2vw, 38px) / -2
+        );
 
       width: 1px;
       height: 62px;
 
-      background: rgba(55,144,197,.34);
+      background:
+        rgba(61,142,190,.28);
     }
 
     .brand {
       display: block;
+
       width: auto;
       object-fit: contain;
     }
 
-    /* визуально примерно одинаковая масса */
     .brand-galax {
-      height: clamp(51px, 4.1vw, 69px);
+      height:
+        clamp(50px, 4vw, 68px);
     }
 
     .brand-washfree {
-      height: clamp(57px, 4.5vw, 76px);
+      height:
+        clamp(56px, 4.45vw, 75px);
     }
 
     .brand-prowash {
-      height: clamp(55px, 4.35vw, 73px);
+      height:
+        clamp(54px, 4.3vw, 72px);
     }
 
     /* =========================================================
@@ -357,20 +408,23 @@
     .scroll-hint {
       position: absolute;
 
-      left: 4.8vw;
-      bottom: 4vh;
+      left: 4.65vw;
+      bottom: 3.6vh;
 
       display: flex;
       align-items: center;
+
       gap: 16px;
+
+      white-space: nowrap;
 
       font-size: 11px;
       font-weight: 500;
 
-      text-transform: uppercase;
       letter-spacing: .20em;
+      text-transform: uppercase;
 
-      color: rgba(17,17,17,.78);
+      color: rgba(17,17,17,.80);
     }
 
     .scroll-line {
@@ -381,7 +435,8 @@
 
       overflow: hidden;
 
-      background: rgba(17,17,17,.13);
+      background:
+        rgba(17,17,17,.11);
     }
 
     .scroll-line::after {
@@ -389,29 +444,33 @@
 
       position: absolute;
 
+      left: 0;
+      top: 0;
+
       width: 34px;
       height: 2px;
 
-      top: 0;
-      left: 0;
+      background: #c99a18;
 
-      background: #d0a01c;
-
-      animation: scrollMove 2.4s ease-in-out infinite alternate;
+      animation:
+        scrollLine 2.2s ease-in-out infinite alternate;
     }
 
-    @keyframes scrollMove {
+    @keyframes scrollLine {
+
       from {
-        transform: translateX(-8px);
+        transform:
+          translateX(-8px);
       }
 
       to {
-        transform: translateX(33px);
+        transform:
+          translateX(33px);
       }
     }
 
     /* =========================================================
-       ЖИВЫЕ ПУЗЫРИ
+       ГЛАМУРНЫЕ ПУЗЫРИ
        ========================================================= */
 
     .bubbles {
@@ -419,9 +478,9 @@
       inset: 0;
 
       z-index: 9;
-      pointer-events: none;
 
       overflow: hidden;
+      pointer-events: none;
 
       will-change: transform;
     }
@@ -430,32 +489,66 @@
       position: absolute;
 
       border-radius: 50%;
-      opacity: .82;
 
-      border: 1.5px solid rgba(255,255,255,.74);
+      opacity: .86;
+
+      border:
+        1px solid
+        rgba(255,255,255,.78);
 
       background:
         radial-gradient(
-          circle at 28% 20%,
+          circle at 27% 18%,
           rgba(255,255,255,.98) 0%,
-          rgba(255,255,255,.40) 7%,
-          rgba(255,255,255,.03) 23%,
-          rgba(255,255,255,.02) 57%,
-          rgba(255,255,255,.16) 78%,
-          rgba(255,255,255,.37) 100%
+          rgba(255,255,255,.55) 5%,
+          rgba(255,255,255,.09) 13%,
+          transparent 24%
+        ),
+        radial-gradient(
+          circle at 70% 76%,
+          rgba(255,193,242,.12),
+          transparent 31%
+        ),
+        radial-gradient(
+          circle at 23% 78%,
+          rgba(132,225,255,.13),
+          transparent 33%
+        ),
+        linear-gradient(
+          135deg,
+          rgba(205,246,255,.08),
+          rgba(255,255,255,.02) 38%,
+          rgba(246,184,255,.09) 72%,
+          rgba(255,233,189,.08)
         );
 
       box-shadow:
-        inset 9px 7px 25px rgba(255,255,255,.27),
-        inset -13px -9px 27px rgba(65,194,255,.18),
-        inset 13px -10px 26px rgba(243,104,255,.13),
-        0 15px 42px rgba(48,111,145,.11);
+        inset 8px 6px 20px
+          rgba(255,255,255,.28),
 
-      backdrop-filter: blur(1px) saturate(150%);
-      -webkit-backdrop-filter: blur(1px) saturate(150%);
+        inset -9px -8px 23px
+          rgba(107,204,255,.08),
 
-      will-change: transform;
+        inset 8px -8px 20px
+          rgba(255,145,226,.07),
+
+        0 10px 30px
+          rgba(54,116,150,.07);
+
+      backdrop-filter:
+        blur(.7px)
+        saturate(1.12);
+
+      -webkit-backdrop-filter:
+        blur(.7px)
+        saturate(1.12);
+
+      will-change:
+        transform,
+        filter;
     }
+
+    /* Очень тонкая радужная кромка */
 
     .bubble::before {
       content: "";
@@ -467,193 +560,416 @@
 
       background:
         conic-gradient(
-          from 15deg,
-          transparent,
-          rgba(80,224,255,.60),
-          rgba(120,119,255,.36),
-          rgba(255,100,217,.49),
-          rgba(255,210,112,.41),
-          rgba(88,235,255,.50),
-          transparent
+          from 10deg,
+
+          rgba(255,255,255,0),
+
+          rgba(115,223,255,.38),
+
+          rgba(152,142,255,.22),
+
+          rgba(255,159,228,.28),
+
+          rgba(255,221,157,.22),
+
+          rgba(125,227,255,.28),
+
+          rgba(255,255,255,0)
         );
 
       mask:
         radial-gradient(
           farthest-side,
-          transparent calc(100% - 7px),
-          #000 calc(100% - 5px)
+          transparent calc(100% - 5px),
+          #000 calc(100% - 3px)
         );
 
       -webkit-mask:
         radial-gradient(
           farthest-side,
-          transparent calc(100% - 7px),
-          #000 calc(100% - 5px)
+          transparent calc(100% - 5px),
+          #000 calc(100% - 3px)
         );
+
+      opacity: .75;
     }
+
+    /* Блик */
 
     .bubble::after {
       content: "";
 
       position: absolute;
 
-      width: 27%;
-      height: 15%;
-
       left: 18%;
-      top: 13%;
+      top: 11%;
+
+      width: 25%;
+      height: 13%;
 
       border-radius: 50%;
 
-      transform: rotate(-28deg);
+      transform:
+        rotate(-30deg);
 
-      background: rgba(255,255,255,.90);
+      background:
+        rgba(255,255,255,.96);
 
-      filter: blur(5px);
+      filter:
+        blur(4px);
+
+      box-shadow:
+        0 0 9px
+        rgba(255,255,255,.85);
     }
 
+    /* =========================================================
+       РАЗМЕРЫ ПУЗЫРЕЙ
+       ========================================================= */
+
     .b1 {
-      width: 230px;
-      height: 230px;
+      width: 225px;
+      height: 225px;
 
-      right: -55px;
-      top: 8%;
+      right: -45px;
+      top: 10%;
 
-      animation: bubble1 11s ease-in-out infinite alternate;
+      animation:
+        float1 8.5s ease-in-out infinite alternate,
+        glow 3.6s ease-in-out infinite alternate;
     }
 
     .b2 {
-      width: 160px;
-      height: 160px;
+      width: 155px;
+      height: 155px;
 
-      left: 46%;
-      top: 2%;
+      left: 48%;
+      top: 3%;
 
-      animation: bubble2 9s ease-in-out infinite alternate;
+      animation:
+        float2 7.6s ease-in-out infinite alternate,
+        glow 4.1s ease-in-out infinite alternate;
     }
 
     .b3 {
-      width: 125px;
-      height: 125px;
+      width: 142px;
+      height: 142px;
 
-      left: 52%;
-      bottom: 11%;
+      left: 51%;
+      bottom: 10%;
 
-      animation: bubble3 10s ease-in-out infinite alternate;
+      animation:
+        float3 7.9s ease-in-out infinite alternate,
+        glow 3.7s ease-in-out infinite alternate;
     }
 
     .b4 {
-      width: 84px;
-      height: 84px;
+      width: 98px;
+      height: 98px;
 
-      left: 44%;
-      top: 26%;
+      left: 41%;
+      top: 14%;
 
-      animation: bubble4 7.6s ease-in-out infinite alternate;
+      animation:
+        float4 6.6s ease-in-out infinite alternate,
+        glow 3.1s ease-in-out infinite alternate;
     }
 
     .b5 {
-      width: 59px;
-      height: 59px;
+      width: 78px;
+      height: 78px;
 
       right: 39%;
-      top: 42%;
+      top: 30%;
 
-      animation: bubble5 6.8s ease-in-out infinite alternate;
+      animation:
+        float5 6.2s ease-in-out infinite alternate,
+        glow 3.5s ease-in-out infinite alternate;
     }
 
     .b6 {
-      width: 42px;
-      height: 42px;
+      width: 62px;
+      height: 62px;
 
-      right: 11%;
-      bottom: 10%;
+      right: 23%;
+      bottom: 14%;
 
-      animation: bubble6 6s ease-in-out infinite alternate;
+      animation:
+        float6 5.8s ease-in-out infinite alternate,
+        glow 2.9s ease-in-out infinite alternate;
     }
 
     .b7 {
-      width: 31px;
-      height: 31px;
+      width: 42px;
+      height: 42px;
 
-      right: 16%;
-      top: 6%;
+      left: 56%;
+      top: 25%;
 
-      animation: bubble7 5.4s ease-in-out infinite alternate;
+      animation:
+        float7 5.4s ease-in-out infinite alternate,
+        glow 3s ease-in-out infinite alternate;
     }
 
-    @keyframes bubble1 {
+    .b8 {
+      width: 34px;
+      height: 34px;
+
+      right: 13%;
+      top: 7%;
+
+      animation:
+        float8 5s ease-in-out infinite alternate,
+        glow 2.8s ease-in-out infinite alternate;
+    }
+
+    /* =========================================================
+       ЗАМЕТНОЕ ПЛАВАНИЕ
+       ========================================================= */
+
+    @keyframes float1 {
+
       from {
-        transform: translate3d(0,55px,0);
+        transform:
+          translate3d(
+            20px,
+            70px,
+            0
+          )
+          rotate(-2deg);
       }
 
       to {
-        transform: translate3d(-75px,-90px,0);
+        transform:
+          translate3d(
+            -105px,
+            -115px,
+            0
+          )
+          rotate(5deg);
       }
     }
 
-    @keyframes bubble2 {
+    @keyframes float2 {
+
       from {
-        transform: translate3d(-8px,45px,0);
+        transform:
+          translate3d(
+            -25px,
+            65px,
+            0
+          );
       }
 
       to {
-        transform: translate3d(48px,-75px,0);
+        transform:
+          translate3d(
+            82px,
+            -100px,
+            0
+          );
       }
     }
 
-    @keyframes bubble3 {
+    @keyframes float3 {
+
       from {
-        transform: translate3d(0,38px,0);
+        transform:
+          translate3d(
+            20px,
+            55px,
+            0
+          );
       }
 
       to {
-        transform: translate3d(-38px,-85px,0);
+        transform:
+          translate3d(
+            -75px,
+            -105px,
+            0
+          );
       }
     }
 
-    @keyframes bubble4 {
+    @keyframes float4 {
+
       from {
-        transform: translate3d(-10px,32px,0);
+        transform:
+          translate3d(
+            -30px,
+            45px,
+            0
+          );
       }
 
       to {
-        transform: translate3d(28px,-74px,0);
+        transform:
+          translate3d(
+            65px,
+            -92px,
+            0
+          );
       }
     }
 
-    @keyframes bubble5 {
+    @keyframes float5 {
+
       from {
-        transform: translate3d(0,25px,0);
+        transform:
+          translate3d(
+            20px,
+            35px,
+            0
+          );
       }
 
       to {
-        transform: translate3d(22px,-60px,0);
+        transform:
+          translate3d(
+            -48px,
+            -88px,
+            0
+          );
       }
     }
 
-    @keyframes bubble6 {
+    @keyframes float6 {
+
       from {
-        transform: translate3d(0,20px,0);
+        transform:
+          translate3d(
+            -15px,
+            28px,
+            0
+          );
       }
 
       to {
-        transform: translate3d(-22px,-55px,0);
+        transform:
+          translate3d(
+            45px,
+            -77px,
+            0
+          );
       }
     }
 
-    @keyframes bubble7 {
+    @keyframes float7 {
+
       from {
-        transform: translate3d(0,18px,0);
+        transform:
+          translate3d(
+            0,
+            25px,
+            0
+          );
       }
 
       to {
-        transform: translate3d(17px,-48px,0);
+        transform:
+          translate3d(
+            38px,
+            -67px,
+            0
+          );
+      }
+    }
+
+    @keyframes float8 {
+
+      from {
+        transform:
+          translate3d(
+            0,
+            20px,
+            0
+          );
+      }
+
+      to {
+        transform:
+          translate3d(
+            -28px,
+            -58px,
+            0
+          );
+      }
+    }
+
+    @keyframes glow {
+
+      from {
+        filter:
+          brightness(.98)
+          saturate(.92);
+      }
+
+      to {
+        filter:
+          brightness(1.12)
+          saturate(1.12);
       }
     }
 
     /* =========================================================
-       МОБИЛЬНАЯ ВЕРСИЯ
+       БЛЕСКИ
+       ========================================================= */
+
+    .sparkle {
+      position: absolute;
+
+      width: 7px;
+      height: 7px;
+
+      border-radius: 50%;
+
+      background: white;
+
+      box-shadow:
+        0 0 8px white,
+        0 0 17px rgba(189,235,255,.9);
+
+      z-index: 10;
+
+      pointer-events: none;
+
+      animation:
+        sparkle 2.4s ease-in-out infinite alternate;
+    }
+
+    .sp1 {
+      right: 29%;
+      top: 35%;
+    }
+
+    .sp2 {
+      right: 17%;
+      bottom: 22%;
+      animation-delay: .8s;
+    }
+
+    .sp3 {
+      left: 47%;
+      bottom: 13%;
+      animation-delay: 1.3s;
+    }
+
+    @keyframes sparkle {
+
+      from {
+        opacity: .25;
+        transform: scale(.5);
+      }
+
+      to {
+        opacity: 1;
+        transform: scale(1.7);
+      }
+    }
+
+    /* =========================================================
+       MOBILE
        ========================================================= */
 
     @media (max-width: 900px) {
@@ -663,10 +979,11 @@
       }
 
       .hero-photo {
-        background-position: 67% center;
+        background-position:
+          67% center;
       }
 
-      .left-mask {
+      .left-atmosphere {
         width: 83%;
         min-width: 0;
       }
@@ -674,14 +991,15 @@
       .logo-2k {
         left: 6vw;
         top: 4vh;
+
         width: 82px;
       }
 
       .category {
         left: 6vw;
-        top: 31vh;
+        top: 30vh;
 
-        font-size: 15px;
+        font-size: 16px;
         letter-spacing: .13em;
       }
 
@@ -689,21 +1007,21 @@
         left: 6vw;
         top: 38vh;
 
-        font-size: 59px;
+        font-size: 56px;
       }
 
       .ornament {
         left: 6vw;
         top: 49vh;
 
-        width: 69vw;
+        width: 68vw;
       }
 
       .descriptor {
         left: 6vw;
         top: 53vh;
 
-        max-width: 72vw;
+        max-width: 73vw;
 
         white-space: normal;
 
@@ -713,6 +1031,7 @@
 
       .brands {
         left: 6vw;
+
         top: auto;
         bottom: 10vh;
 
@@ -749,22 +1068,27 @@
       }
 
       .b2 {
-        width: 105px;
-        height: 105px;
+        width: 108px;
+        height: 108px;
       }
+
     }
 
     @media (prefers-reduced-motion: reduce) {
+
       .hero-photo,
-      .light::before,
+      .light-layer::before,
       .bubble,
-      .scroll-line::after {
+      .scroll-line::after,
+      .sparkle {
         animation: none !important;
       }
+
     }
 
   </style>
 </head>
+
 
 <body>
 
@@ -772,11 +1096,13 @@
 
     <div class="hero-photo"></div>
 
-    <div class="left-mask"></div>
+    <div class="left-atmosphere"></div>
 
-    <div class="light"></div>
+    <div class="light-layer"></div>
+
 
     <div class="bubbles" id="bubbles">
+
       <div class="bubble b1"></div>
       <div class="bubble b2"></div>
       <div class="bubble b3"></div>
@@ -784,7 +1110,15 @@
       <div class="bubble b5"></div>
       <div class="bubble b6"></div>
       <div class="bubble b7"></div>
+      <div class="bubble b8"></div>
+
     </div>
+
+
+    <span class="sparkle sp1"></span>
+    <span class="sparkle sp2"></span>
+    <span class="sparkle sp3"></span>
+
 
     <section class="content">
 
@@ -794,62 +1128,92 @@
         alt="2K"
       >
 
+
       <div class="category">
+
         <span>HOUSE CARE</span>
-        <span class="dot"></span>
+
+        <span class="category-dot"></span>
+
         <span>2026</span>
+
       </div>
+
 
       <h1 class="title">
         НОВИНКИ
       </h1>
 
+
       <div class="ornament">
+
         <span class="ornament-line"></span>
-        <span class="ornament-star">✦</span>
+
+        <span class="ornament-star">
+          ✦
+        </span>
+
         <span class="ornament-line"></span>
+
       </div>
+
 
       <div class="descriptor">
         НОВІ ФОРМУЛИ. НОВІ АРОМАТИ. НОВІ РІШЕННЯ ДЛЯ ДОМУ.
       </div>
 
+
       <div class="brands">
 
         <div class="brand-wrap">
+
           <img
             class="brand brand-galax"
             src="assets/galax-logo.png"
             alt="GALAX"
           >
+
         </div>
 
+
         <div class="brand-wrap">
+
           <img
             class="brand brand-washfree"
             src="assets/washfree-logo.png"
             alt="WASH & FREE"
           >
+
         </div>
 
+
         <div class="brand-wrap">
+
           <img
             class="brand brand-prowash"
             src="assets/prowash-logo-full.png"
             alt="PRO WASH"
           >
+
         </div>
 
       </div>
 
+
       <div class="scroll-hint">
+
         <span class="scroll-line"></span>
-        <span>ГОРТАЙТЕ НИЖЧЕ</span>
+
+        <span>
+          ГОРТАЙТЕ НИЖЧЕ
+        </span>
+
       </div>
 
     </section>
 
   </main>
+
 
   <script>
 
@@ -859,24 +1223,31 @@
     const bubbles =
       document.getElementById("bubbles");
 
+
     hero.addEventListener(
       "mousemove",
-      (event) => {
+      event => {
 
         const x =
-          event.clientX / window.innerWidth - .5;
+          event.clientX /
+          window.innerWidth - .5;
 
         const y =
-          event.clientY / window.innerHeight - .5;
+          event.clientY /
+          window.innerHeight - .5;
+
 
         bubbles.style.transform =
-          `translate3d(
-            ${x * -16}px,
-            ${y * -12}px,
+          `
+          translate3d(
+            ${x * -22}px,
+            ${y * -17}px,
             0
-          )`;
+          )
+          `;
       }
     );
+
 
     hero.addEventListener(
       "mouseleave",
