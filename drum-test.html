@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>2K — Drum Test</title>
+
+<style>
+*{
+  box-sizing:border-box;
+  margin:0;
+  padding:0;
+}
+
+html,body{
+  width:100%;
+  height:100%;
+  overflow:hidden;
+  background:#dcebf4;
+}
+
+/* НЫНЕШНИЙ САЙТ — БЕЗ ИЗМЕНЕНИЙ */
+.site{
+  position:absolute;
+  inset:0;
+  width:100%;
+  height:100%;
+  border:0;
+}
+
+/* ТЕСТОВЫЙ ЭФФЕКТ ТОЛЬКО ВНУТРИ ДВЕРЦЫ */
+.drum-effect{
+  position:absolute;
+
+  /* подогнано под текущую desktop-композицию */
+  left:73.1%;
+  top:31.2%;
+
+  width:21.3vw;
+  aspect-ratio:1/1;
+
+  max-width:410px;
+
+  border-radius:50%;
+  overflow:hidden;
+
+  pointer-events:none;
+  z-index:100;
+
+  /* эффект остаётся деликатным */
+  opacity:.72;
+
+  /* обрезаем строго круглой формой стекла */
+  clip-path:circle(48% at 50% 50%);
+}
+
+/* лёгкое вращение света — не крутящийся мультяшный диск */
+.drum-spin{
+  position:absolute;
+  inset:5%;
+  border-radius:50%;
+
+  background:
+    conic-gradient(
+      from 0deg,
+      transparent 0deg,
+      rgba(180,225,246,.04) 22deg,
+      rgba(255,255,255,.13) 44deg,
+      transparent 72deg,
+
+      transparent 120deg,
+      rgba(200,235,250,.08) 148deg,
+      transparent 185deg,
+
+      transparent 225deg,
+      rgba(255,255,255,.10) 258deg,
+      transparent 295deg
+    );
+
+  animation:spin 14s linear infinite;
+  filter:blur(3px);
+}
+
+/* ВОДА */
+.water{
+  position:absolute;
+
+  left:-15%;
+  bottom:-10%;
+
+  width:130%;
+  height:47%;
+
+  background:
+    linear-gradient(
+      180deg,
+      rgba(221,246,255,.04) 0%,
+      rgba(157,218,242,.12) 36%,
+      rgba(92,182,222,.20) 100%
+    );
+
+  border-radius:
+    47% 53% 38% 44% /
+    18% 20% 80% 82%;
+
+  animation:waterRock 4.4s ease-in-out infinite alternate;
+
+  filter:blur(.8px);
+}
+
+/* верхняя живая кромка воды */
+.water::before{
+  content:"";
+
+  position:absolute;
+
+  left:-4%;
+  top:-15px;
+
+  width:108%;
+  height:32px;
+
+  border-radius:50%;
+
+  background:
+    radial-gradient(
+      ellipse at center,
+      rgba(255,255,255,.38) 0%,
+      rgba(173,226,247,.16) 45%,
+      transparent 74%
+    );
+
+  animation:wave 2.8s ease-in-out infinite alternate;
+}
+
+/* второй небольшой плеск */
+.water::after{
+  content:"";
+
+  position:absolute;
+
+  width:52%;
+  height:24px;
+
+  left:18%;
+  top:-6px;
+
+  border-radius:50%;
+
+  border-top:
+    2px solid
+    rgba(255,255,255,.32);
+
+  transform:rotate(-5deg);
+
+  animation:splash 3.3s ease-in-out infinite alternate;
+}
+
+/* БЛИК ПО СТЕКЛУ */
+.glass-light{
+  position:absolute;
+  inset:8%;
+
+  border-radius:50%;
+
+  background:
+    linear-gradient(
+      125deg,
+      transparent 23%,
+      rgba(255,255,255,.025) 34%,
+      rgba(255,255,255,.16) 46%,
+      rgba(255,255,255,.035) 56%,
+      transparent 68%
+    );
+
+  animation:glassLight 7s ease-in-out infinite alternate;
+}
+
+
+/* АНИМАЦИИ */
+
+@keyframes spin{
+  from{
+    transform:rotate(0deg);
+  }
+
+  to{
+    transform:rotate(360deg);
+  }
+}
+
+@keyframes waterRock{
+  0%{
+    transform:
+      translateX(-3%)
+      translateY(4%)
+      rotate(-3deg);
+  }
+
+  50%{
+    transform:
+      translateX(3%)
+      translateY(-2%)
+      rotate(2deg);
+  }
+
+  100%{
+    transform:
+      translateX(-1%)
+      translateY(2%)
+      rotate(-1deg);
+  }
+}
+
+@keyframes wave{
+  from{
+    transform:
+      translateX(-5%)
+      scaleY(.72);
+  }
+
+  to{
+    transform:
+      translateX(6%)
+      scaleY(1.16);
+  }
+}
+
+@keyframes splash{
+  from{
+    transform:
+      translateX(-8%)
+      rotate(-7deg)
+      scaleX(.82);
+
+    opacity:.35;
+  }
+
+  to{
+    transform:
+      translateX(13%)
+      rotate(4deg)
+      scaleX(1.12);
+
+    opacity:.85;
+  }
+}
+
+@keyframes glassLight{
+  from{
+    transform:
+      translateX(-5%)
+      rotate(-6deg);
+
+    opacity:.35;
+  }
+
+  to{
+    transform:
+      translateX(5%)
+      rotate(7deg);
+
+    opacity:.72;
+  }
+}
+
+/* На узких экранах тест не показываем:
+   сначала доводим desktop */
+@media(max-width:1000px){
+  .drum-effect{
+    display:none;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<!-- ТВОЙ ТЕКУЩИЙ САЙТ ОСТАЁТСЯ 1:1 -->
+<iframe
+  class="site"
+  src="./index.html"
+  title="2K House Care"
+></iframe>
+
+<!-- ТОЛЬКО ПРОБНАЯ АНИМАЦИЯ ДВЕРЦЫ -->
+<div class="drum-effect">
+
+  <div class="drum-spin"></div>
+
+  <div class="water"></div>
+
+  <div class="glass-light"></div>
+
+</div>
+
+</body>
+</html>
