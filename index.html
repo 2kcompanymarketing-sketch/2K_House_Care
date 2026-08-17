@@ -1,1264 +1,771 @@
 <!DOCTYPE html>
 <html lang="uk">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-  <title>2K House Care • 2026</title>
-
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-
-  <link
-    href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600&family=Playfair+Display:wght@400;500&display=swap"
-    rel="stylesheet"
-  >
-
-  <style>
-
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
-
-    html,
-    body {
-      width: 100%;
-      min-height: 100%;
-    }
-
-    body {
-      font-family: "DM Sans", sans-serif;
-      background: #eef7fb;
-      color: #111;
-      overflow-x: hidden;
-    }
-
-    /* =========================================================
-       HERO
-       ========================================================= */
-
-    .hero {
-      position: relative;
-      width: 100vw;
-      height: 100svh;
-      min-height: 720px;
-      overflow: hidden;
-      isolation: isolate;
-      background: #eaf5fb;
-    }
-
-    /* =========================================================
-       ФОТО
-       ========================================================= */
-
-    .hero-photo {
-      position: absolute;
-      inset: -1.5%;
-      z-index: 0;
-
-      background-image: url("assets/hero-laundry.png");
-      background-size: cover;
-      background-position: 58% center;
-
-      transform: scale(1.025);
-
-      filter:
-        saturate(1.04)
-        contrast(1.015)
-        brightness(1.015);
-
-      animation:
-        photoBreath 15s ease-in-out infinite alternate;
-
-      will-change: transform;
-    }
-
-    @keyframes photoBreath {
-
-      from {
-        transform:
-          scale(1.025)
-          translate3d(0, 0, 0);
-      }
-
-      to {
-        transform:
-          scale(1.055)
-          translate3d(-0.45%, -0.25%, 0);
-      }
-    }
-
-    /* =========================================================
-       ЛЕВАЯ СВЕТЛАЯ АТМОСФЕРА
-       КАПЕЛЬКУ ПРОЗРАЧНАЯ
-       ========================================================= */
-
-    .left-atmosphere {
-      position: absolute;
-      inset: 0 auto 0 0;
-      z-index: 2;
-
-      width: 43vw;
-      min-width: 600px;
-
-      pointer-events: none;
-
-      background:
-        linear-gradient(
-          90deg,
-          rgba(241,249,253,.94) 0%,
-          rgba(239,248,253,.88) 48%,
-          rgba(235,246,252,.67) 72%,
-          rgba(230,244,251,.24) 91%,
-          rgba(230,244,251,0) 100%
-        );
-    }
-
-    .left-atmosphere::after {
-      content: "";
-      position: absolute;
-      inset: 0;
-
-      background:
-        radial-gradient(
-          circle at 17% 38%,
-          rgba(255,255,255,.46),
-          transparent 49%
-        );
-    }
-
-    /* =========================================================
-       СВЕТ
-       ========================================================= */
-
-    .light-layer {
-      position: absolute;
-      inset: 0;
-      z-index: 4;
-
-      overflow: hidden;
-      pointer-events: none;
-
-      mix-blend-mode: screen;
-    }
-
-    .light-layer::before {
-      content: "";
-
-      position: absolute;
-
-      width: 48vw;
-      height: 130vh;
-
-      left: 43vw;
-      top: -22vh;
-
-      background:
-        linear-gradient(
-          112deg,
-          transparent 19%,
-          rgba(255,255,255,.03) 34%,
-          rgba(255,255,255,.34) 49%,
-          rgba(184,230,255,.15) 57%,
-          transparent 73%
-        );
-
-      filter: blur(17px);
-
-      animation:
-        lightSweep 8s ease-in-out infinite alternate;
-    }
-
-    @keyframes lightSweep {
-
-      from {
-        transform:
-          translateX(-7vw)
-          rotate(8deg);
-
-        opacity: .48;
-      }
-
-      to {
-        transform:
-          translateX(12vw)
-          rotate(8deg);
-
-        opacity: .95;
-      }
-    }
-
-    /* =========================================================
-       КОНТЕНТ
-       ========================================================= */
-
-    .content {
-      position: relative;
-      z-index: 20;
-
-      width: 100%;
-      height: 100%;
-    }
-
-    /* =========================================================
-       2K
-       ========================================================= */
-
-    .logo-2k {
-      position: absolute;
-
-      left: 4.65vw;
-      top: 4.5vh;
-
-      width: clamp(92px, 6.4vw, 124px);
-      height: auto;
-
-      display: block;
-      object-fit: contain;
-
-      filter:
-        grayscale(1)
-        brightness(0);
-    }
-
-    /* =========================================================
-       HOUSE CARE
-       ========================================================= */
-
-    .category {
-      position: absolute;
-
-      left: 4.65vw;
-      top: 35.6vh;
-
-      display: flex;
-      align-items: center;
-      gap: 15px;
-
-      white-space: nowrap;
-
-      font-size: clamp(22px, 1.72vw, 32px);
-      line-height: 1;
-
-      font-weight: 600;
-      letter-spacing: .175em;
-
-      color: #111;
-    }
-
-    .category-dot {
-      width: 6px;
-      height: 6px;
-
-      flex: none;
-
-      border-radius: 50%;
-      background: #111;
-    }
-
-    /* =========================================================
-       НОВИНКИ — ЧУТЬ МЕНЬШЕ
-       ========================================================= */
-
-    .title {
-      position: absolute;
-
-      left: 4.45vw;
-      top: 45.1vh;
-
-      font-family:
-        "Playfair Display",
-        Georgia,
-        serif;
-
-      font-size: clamp(67px, 5.7vw, 108px);
-      line-height: .95;
-
-      font-weight: 400;
-      letter-spacing: -.035em;
-
-      color: #111;
-    }
-
-    /* =========================================================
-       РАЗДЕЛИТЕЛЬ
-       ========================================================= */
-
-    .ornament {
-      position: absolute;
-
-      left: 4.65vw;
-      top: 60.8vh;
-
-      width: min(32vw, 610px);
-
-      display: flex;
-      align-items: center;
-      gap: 15px;
-    }
-
-    .ornament-line {
-      flex: 1;
-
-      height: 1px;
-
-      background:
-        rgba(17,17,17,.82);
-    }
-
-    .ornament-star {
-      font-size: 18px;
-      line-height: 1;
-
-      color: #111;
-    }
-
-    /* =========================================================
-       ПОДПИСЬ
-       ========================================================= */
-
-    .descriptor {
-      position: absolute;
-
-      left: 4.65vw;
-      top: 65.3vh;
-
-      white-space: nowrap;
-
-      font-size: clamp(12px, .97vw, 18px);
-      line-height: 1.2;
-
-      font-weight: 500;
-      letter-spacing: .02em;
-
-      color: #111;
-    }
-
-    /* =========================================================
-       ЛОГОТИПЫ
-       ========================================================= */
-
-    .brands {
-      position: absolute;
-
-      left: 4.65vw;
-      top: 76.2vh;
-
-      display: flex;
-      align-items: center;
-
-      gap: clamp(25px, 2vw, 38px);
-    }
-
-    .brand-wrap {
-      position: relative;
-
-      height: 76px;
-
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-
-    .brand-wrap + .brand-wrap::before {
-      content: "";
-
-      position: absolute;
-
-      left:
-        calc(
-          clamp(25px, 2vw, 38px) / -2
-        );
-
-      width: 1px;
-      height: 62px;
-
-      background:
-        rgba(61,142,190,.28);
-    }
-
-    .brand {
-      display: block;
-
-      width: auto;
-      object-fit: contain;
-    }
-
-    .brand-galax {
-      height:
-        clamp(50px, 4vw, 68px);
-    }
-
-    .brand-washfree {
-      height:
-        clamp(56px, 4.45vw, 75px);
-    }
-
-    .brand-prowash {
-      height:
-        clamp(54px, 4.3vw, 72px);
-    }
-
-    /* =========================================================
-       ГОРТАЙТЕ НИЖЧЕ
-       ========================================================= */
-
-    .scroll-hint {
-      position: absolute;
-
-      left: 4.65vw;
-      bottom: 3.6vh;
-
-      display: flex;
-      align-items: center;
-
-      gap: 16px;
-
-      white-space: nowrap;
-
-      font-size: 11px;
-      font-weight: 500;
-
-      letter-spacing: .20em;
-      text-transform: uppercase;
-
-      color: rgba(17,17,17,.80);
-    }
-
-    .scroll-line {
-      position: relative;
-
-      width: 58px;
-      height: 2px;
-
-      overflow: hidden;
-
-      background:
-        rgba(17,17,17,.11);
-    }
-
-    .scroll-line::after {
-      content: "";
-
-      position: absolute;
-
-      left: 0;
-      top: 0;
-
-      width: 34px;
-      height: 2px;
-
-      background: #c99a18;
-
-      animation:
-        scrollLine 2.2s ease-in-out infinite alternate;
-    }
-
-    @keyframes scrollLine {
-
-      from {
-        transform:
-          translateX(-8px);
-      }
-
-      to {
-        transform:
-          translateX(33px);
-      }
-    }
-
-    /* =========================================================
-       ГЛАМУРНЫЕ ПУЗЫРИ
-       ========================================================= */
-
-    .bubbles {
-      position: absolute;
-      inset: 0;
-
-      z-index: 9;
-
-      overflow: hidden;
-      pointer-events: none;
-
-      will-change: transform;
-    }
-
-    .bubble {
-      position: absolute;
-
-      border-radius: 50%;
-
-      opacity: .86;
-
-      border:
-        1px solid
-        rgba(255,255,255,.78);
-
-      background:
-        radial-gradient(
-          circle at 27% 18%,
-          rgba(255,255,255,.98) 0%,
-          rgba(255,255,255,.55) 5%,
-          rgba(255,255,255,.09) 13%,
-          transparent 24%
-        ),
-        radial-gradient(
-          circle at 70% 76%,
-          rgba(255,193,242,.12),
-          transparent 31%
-        ),
-        radial-gradient(
-          circle at 23% 78%,
-          rgba(132,225,255,.13),
-          transparent 33%
-        ),
-        linear-gradient(
-          135deg,
-          rgba(205,246,255,.08),
-          rgba(255,255,255,.02) 38%,
-          rgba(246,184,255,.09) 72%,
-          rgba(255,233,189,.08)
-        );
-
-      box-shadow:
-        inset 8px 6px 20px
-          rgba(255,255,255,.28),
-
-        inset -9px -8px 23px
-          rgba(107,204,255,.08),
-
-        inset 8px -8px 20px
-          rgba(255,145,226,.07),
-
-        0 10px 30px
-          rgba(54,116,150,.07);
-
-      backdrop-filter:
-        blur(.7px)
-        saturate(1.12);
-
-      -webkit-backdrop-filter:
-        blur(.7px)
-        saturate(1.12);
-
-      will-change:
-        transform,
-        filter;
-    }
-
-    /* Очень тонкая радужная кромка */
-
-    .bubble::before {
-      content: "";
-
-      position: absolute;
-      inset: -1px;
-
-      border-radius: inherit;
-
-      background:
-        conic-gradient(
-          from 10deg,
-
-          rgba(255,255,255,0),
-
-          rgba(115,223,255,.38),
-
-          rgba(152,142,255,.22),
-
-          rgba(255,159,228,.28),
-
-          rgba(255,221,157,.22),
-
-          rgba(125,227,255,.28),
-
-          rgba(255,255,255,0)
-        );
-
-      mask:
-        radial-gradient(
-          farthest-side,
-          transparent calc(100% - 5px),
-          #000 calc(100% - 3px)
-        );
-
-      -webkit-mask:
-        radial-gradient(
-          farthest-side,
-          transparent calc(100% - 5px),
-          #000 calc(100% - 3px)
-        );
-
-      opacity: .75;
-    }
-
-    /* Блик */
-
-    .bubble::after {
-      content: "";
-
-      position: absolute;
-
-      left: 18%;
-      top: 11%;
-
-      width: 25%;
-      height: 13%;
-
-      border-radius: 50%;
-
-      transform:
-        rotate(-30deg);
-
-      background:
-        rgba(255,255,255,.96);
-
-      filter:
-        blur(4px);
-
-      box-shadow:
-        0 0 9px
-        rgba(255,255,255,.85);
-    }
-
-    /* =========================================================
-       РАЗМЕРЫ ПУЗЫРЕЙ
-       ========================================================= */
-
-    .b1 {
-      width: 225px;
-      height: 225px;
-
-      right: -45px;
-      top: 10%;
-
-      animation:
-        float1 8.5s ease-in-out infinite alternate,
-        glow 3.6s ease-in-out infinite alternate;
-    }
-
-    .b2 {
-      width: 155px;
-      height: 155px;
-
-      left: 48%;
-      top: 3%;
-
-      animation:
-        float2 7.6s ease-in-out infinite alternate,
-        glow 4.1s ease-in-out infinite alternate;
-    }
-
-    .b3 {
-      width: 142px;
-      height: 142px;
-
-      left: 51%;
-      bottom: 10%;
-
-      animation:
-        float3 7.9s ease-in-out infinite alternate,
-        glow 3.7s ease-in-out infinite alternate;
-    }
-
-    .b4 {
-      width: 98px;
-      height: 98px;
-
-      left: 41%;
-      top: 14%;
-
-      animation:
-        float4 6.6s ease-in-out infinite alternate,
-        glow 3.1s ease-in-out infinite alternate;
-    }
-
-    .b5 {
-      width: 78px;
-      height: 78px;
-
-      right: 39%;
-      top: 30%;
-
-      animation:
-        float5 6.2s ease-in-out infinite alternate,
-        glow 3.5s ease-in-out infinite alternate;
-    }
-
-    .b6 {
-      width: 62px;
-      height: 62px;
-
-      right: 23%;
-      bottom: 14%;
-
-      animation:
-        float6 5.8s ease-in-out infinite alternate,
-        glow 2.9s ease-in-out infinite alternate;
-    }
-
-    .b7 {
-      width: 42px;
-      height: 42px;
-
-      left: 56%;
-      top: 25%;
-
-      animation:
-        float7 5.4s ease-in-out infinite alternate,
-        glow 3s ease-in-out infinite alternate;
-    }
-
-    .b8 {
-      width: 34px;
-      height: 34px;
-
-      right: 13%;
-      top: 7%;
-
-      animation:
-        float8 5s ease-in-out infinite alternate,
-        glow 2.8s ease-in-out infinite alternate;
-    }
-
-    /* =========================================================
-       ЗАМЕТНОЕ ПЛАВАНИЕ
-       ========================================================= */
-
-    @keyframes float1 {
-
-      from {
-        transform:
-          translate3d(
-            20px,
-            70px,
-            0
-          )
-          rotate(-2deg);
-      }
-
-      to {
-        transform:
-          translate3d(
-            -105px,
-            -115px,
-            0
-          )
-          rotate(5deg);
-      }
-    }
-
-    @keyframes float2 {
-
-      from {
-        transform:
-          translate3d(
-            -25px,
-            65px,
-            0
-          );
-      }
-
-      to {
-        transform:
-          translate3d(
-            82px,
-            -100px,
-            0
-          );
-      }
-    }
-
-    @keyframes float3 {
-
-      from {
-        transform:
-          translate3d(
-            20px,
-            55px,
-            0
-          );
-      }
-
-      to {
-        transform:
-          translate3d(
-            -75px,
-            -105px,
-            0
-          );
-      }
-    }
-
-    @keyframes float4 {
-
-      from {
-        transform:
-          translate3d(
-            -30px,
-            45px,
-            0
-          );
-      }
-
-      to {
-        transform:
-          translate3d(
-            65px,
-            -92px,
-            0
-          );
-      }
-    }
-
-    @keyframes float5 {
-
-      from {
-        transform:
-          translate3d(
-            20px,
-            35px,
-            0
-          );
-      }
-
-      to {
-        transform:
-          translate3d(
-            -48px,
-            -88px,
-            0
-          );
-      }
-    }
-
-    @keyframes float6 {
-
-      from {
-        transform:
-          translate3d(
-            -15px,
-            28px,
-            0
-          );
-      }
-
-      to {
-        transform:
-          translate3d(
-            45px,
-            -77px,
-            0
-          );
-      }
-    }
-
-    @keyframes float7 {
-
-      from {
-        transform:
-          translate3d(
-            0,
-            25px,
-            0
-          );
-      }
-
-      to {
-        transform:
-          translate3d(
-            38px,
-            -67px,
-            0
-          );
-      }
-    }
-
-    @keyframes float8 {
-
-      from {
-        transform:
-          translate3d(
-            0,
-            20px,
-            0
-          );
-      }
-
-      to {
-        transform:
-          translate3d(
-            -28px,
-            -58px,
-            0
-          );
-      }
-    }
-
-    @keyframes glow {
-
-      from {
-        filter:
-          brightness(.98)
-          saturate(.92);
-      }
-
-      to {
-        filter:
-          brightness(1.12)
-          saturate(1.12);
-      }
-    }
-
-    /* =========================================================
-       БЛЕСКИ
-       ========================================================= */
-
-    .sparkle {
-      position: absolute;
-
-      width: 7px;
-      height: 7px;
-
-      border-radius: 50%;
-
-      background: white;
-
-      box-shadow:
-        0 0 8px white,
-        0 0 17px rgba(189,235,255,.9);
-
-      z-index: 10;
-
-      pointer-events: none;
-
-      animation:
-        sparkle 2.4s ease-in-out infinite alternate;
-    }
-
-    .sp1 {
-      right: 29%;
-      top: 35%;
-    }
-
-    .sp2 {
-      right: 17%;
-      bottom: 22%;
-      animation-delay: .8s;
-    }
-
-    .sp3 {
-      left: 47%;
-      bottom: 13%;
-      animation-delay: 1.3s;
-    }
-
-    @keyframes sparkle {
-
-      from {
-        opacity: .25;
-        transform: scale(.5);
-      }
-
-      to {
-        opacity: 1;
-        transform: scale(1.7);
-      }
-    }
-
-    /* =========================================================
-       MOBILE
-       ========================================================= */
-
-    @media (max-width: 900px) {
-
-      .hero {
-        min-height: 760px;
-      }
-
-      .hero-photo {
-        background-position:
-          67% center;
-      }
-
-      .left-atmosphere {
-        width: 83%;
-        min-width: 0;
-      }
-
-      .logo-2k {
-        left: 6vw;
-        top: 4vh;
-
-        width: 82px;
-      }
-
-      .category {
-        left: 6vw;
-        top: 30vh;
-
-        font-size: 16px;
-        letter-spacing: .13em;
-      }
-
-      .title {
-        left: 6vw;
-        top: 38vh;
-
-        font-size: 56px;
-      }
-
-      .ornament {
-        left: 6vw;
-        top: 49vh;
-
-        width: 68vw;
-      }
-
-      .descriptor {
-        left: 6vw;
-        top: 53vh;
-
-        max-width: 73vw;
-
-        white-space: normal;
-
-        font-size: 13px;
-        line-height: 1.5;
-      }
-
-      .brands {
-        left: 6vw;
-
-        top: auto;
-        bottom: 10vh;
-
-        gap: 17px;
-      }
-
-      .brand-wrap {
-        height: 50px;
-      }
-
-      .brand-galax {
-        height: 37px;
-      }
-
-      .brand-washfree {
-        height: 43px;
-      }
-
-      .brand-prowash {
-        height: 41px;
-      }
-
-      .brand-wrap + .brand-wrap::before {
-        display: none;
-      }
-
-      .scroll-hint {
-        display: none;
-      }
-
-      .b1 {
-        width: 160px;
-        height: 160px;
-      }
-
-      .b2 {
-        width: 108px;
-        height: 108px;
-      }
-
-    }
-
-    @media (prefers-reduced-motion: reduce) {
-
-      .hero-photo,
-      .light-layer::before,
-      .bubble,
-      .scroll-line::after,
-      .sparkle {
-        animation: none !important;
-      }
-
-    }
-
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>2K House Care • 2026</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600&family=Playfair+Display:wght@400&display=swap" rel="stylesheet">
+
+<style>
+*{
+  box-sizing:border-box;
+  margin:0;
+  padding:0;
+}
+
+html,body{
+  width:100%;
+  min-height:100%;
+}
+
+body{
+  font-family:"DM Sans",sans-serif;
+  color:#111;
+  background:#eef7fb;
+  overflow-x:hidden;
+}
+
+.hero{
+  position:relative;
+  width:100vw;
+  height:100vh;
+  min-height:720px;
+  overflow:hidden;
+  isolation:isolate;
+}
+
+/* ========================================
+   УТВЕРЖДЕННЫЙ ЧИСТЫЙ ФОН
+   ======================================== */
+
+.hero-bg{
+  position:absolute;
+  inset:-1%;
+  z-index:0;
+  background:
+    url("assets/hero-laundry-clean.png")
+    58% center / cover no-repeat;
+  transform:scale(1.02);
+  animation:bgBreath 16s ease-in-out infinite alternate;
+}
+
+@keyframes bgBreath{
+  from{
+    transform:scale(1.02) translate3d(0,0,0);
+  }
+  to{
+    transform:scale(1.045) translate3d(-0.35%,-0.2%,0);
+  }
+}
+
+/* ========================================
+   ЛЕВАЯ ПОДЛОЖКА — ЧУТЬ ПРОЗРАЧНАЯ
+   ======================================== */
+
+.left-light{
+  position:absolute;
+  inset:0 auto 0 0;
+  width:42.5vw;
+  min-width:610px;
+  z-index:2;
+  pointer-events:none;
+
+  background:
+    linear-gradient(
+      90deg,
+      rgba(245,251,254,.88) 0%,
+      rgba(241,249,253,.82) 48%,
+      rgba(237,247,252,.58) 72%,
+      rgba(235,246,252,.20) 91%,
+      rgba(235,246,252,0) 100%
+    );
+}
+
+/* ========================================
+   МЯГКИЕ БЛИКИ
+   ======================================== */
+
+.light-sweep{
+  position:absolute;
+  inset:0;
+  z-index:3;
+  overflow:hidden;
+  pointer-events:none;
+  mix-blend-mode:screen;
+}
+
+.light-sweep::after{
+  content:"";
+  position:absolute;
+  width:40vw;
+  height:130vh;
+  left:45vw;
+  top:-20vh;
+  transform:rotate(8deg);
+  filter:blur(18px);
+
+  background:
+    linear-gradient(
+      112deg,
+      transparent 22%,
+      rgba(255,255,255,.04) 34%,
+      rgba(255,255,255,.32) 49%,
+      rgba(193,235,255,.12) 58%,
+      transparent 72%
+    );
+
+  animation:lightMove 8s ease-in-out infinite alternate;
+}
+
+@keyframes lightMove{
+  from{
+    transform:translateX(-7vw) rotate(8deg);
+    opacity:.5;
+  }
+  to{
+    transform:translateX(10vw) rotate(8deg);
+    opacity:.95;
+  }
+}
+
+/* ========================================
+   КОНТЕНТ — УТВЕРЖДЕННАЯ КОМПОЗИЦИЯ
+   ======================================== */
+
+.content{
+  position:relative;
+  z-index:20;
+  width:100%;
+  height:100%;
+}
+
+.logo2k{
+  position:absolute;
+  left:4.5vw;
+  top:4.3vh;
+  width:clamp(92px,6.4vw,123px);
+  height:auto;
+  display:block;
+  filter:grayscale(1) brightness(0);
+}
+
+/* HOUSE CARE — крупнее */
+
+.category{
+  position:absolute;
+  left:4.55vw;
+  top:35.2vh;
+
+  display:flex;
+  align-items:center;
+  gap:15px;
+
+  font-size:clamp(22px,1.72vw,32px);
+  font-weight:600;
+  line-height:1;
+  letter-spacing:.17em;
+  color:#111;
+  white-space:nowrap;
+}
+
+.category-dot{
+  width:6px;
+  height:6px;
+  border-radius:50%;
+  background:#111;
+}
+
+/* НОВИНКИ — чуть меньше */
+
+.title{
+  position:absolute;
+  left:4.35vw;
+  top:44.4vh;
+
+  font-family:"Playfair Display",Georgia,serif;
+  font-size:clamp(66px,5.6vw,106px);
+  font-weight:400;
+  line-height:.95;
+  letter-spacing:-.035em;
+  color:#111;
+}
+
+/* разделитель */
+
+.ornament{
+  position:absolute;
+  left:4.55vw;
+  top:59.9vh;
+  width:min(32vw,610px);
+
+  display:flex;
+  align-items:center;
+  gap:15px;
+}
+
+.ornament-line{
+  height:1px;
+  flex:1;
+  background:rgba(17,17,17,.82);
+}
+
+.ornament-star{
+  font-size:18px;
+  line-height:1;
+}
+
+/* три фразы */
+
+.descriptor{
+  position:absolute;
+  left:4.55vw;
+  top:64.4vh;
+
+  font-size:clamp(12px,.97vw,18px);
+  font-weight:500;
+  line-height:1.2;
+  letter-spacing:.018em;
+  white-space:nowrap;
+}
+
+/* ========================================
+   ЛОГОТИПЫ
+   ======================================== */
+
+.brands{
+  position:absolute;
+  left:4.55vw;
+  top:75.5vh;
+
+  display:flex;
+  align-items:center;
+  gap:clamp(25px,2vw,38px);
+}
+
+.brand-wrap{
+  position:relative;
+  height:76px;
+
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+
+.brand-wrap + .brand-wrap::before{
+  content:"";
+  position:absolute;
+  left:calc(clamp(25px,2vw,38px) / -2);
+  width:1px;
+  height:62px;
+  background:rgba(56,143,195,.30);
+}
+
+.brand{
+  width:auto;
+  display:block;
+  object-fit:contain;
+}
+
+.galax{
+  height:clamp(50px,4vw,68px);
+}
+
+.washfree{
+  height:clamp(56px,4.45vw,75px);
+}
+
+.prowash{
+  height:clamp(54px,4.3vw,72px);
+}
+
+/* ========================================
+   ГОРТАЙТЕ НИЖЧЕ
+   ======================================== */
+
+.scroll{
+  position:absolute;
+  left:4.55vw;
+  bottom:3.5vh;
+
+  display:flex;
+  align-items:center;
+  gap:16px;
+
+  font-size:11px;
+  font-weight:500;
+  letter-spacing:.20em;
+  text-transform:uppercase;
+  white-space:nowrap;
+}
+
+.scroll-line{
+  position:relative;
+  width:58px;
+  height:2px;
+  overflow:hidden;
+  background:rgba(17,17,17,.10);
+}
+
+.scroll-line::after{
+  content:"";
+  position:absolute;
+  top:0;
+  left:0;
+  width:34px;
+  height:2px;
+  background:#cca019;
+  animation:scrollMove 2.2s ease-in-out infinite alternate;
+}
+
+@keyframes scrollMove{
+  from{transform:translateX(-8px);}
+  to{transform:translateX(33px);}
+}
+
+/* ============================================================
+   ГЛАМУРНЫЕ ДВИЖУЩИЕСЯ ПУЗЫРИ
+
+   ВАЖНО:
+   почти прозрачный центр
+   очень тонкая радужная пленка
+   яркий белый блик
+   НЕТ синей непрозрачной заливки
+   ============================================================ */
+
+.bubble-field{
+  position:absolute;
+  inset:0;
+  z-index:9;
+  pointer-events:none;
+  overflow:hidden;
+  will-change:transform;
+}
+
+.bubble{
+  position:absolute;
+  border-radius:50%;
+
+  /* практически прозрачное стекло */
+  background:
+    radial-gradient(
+      circle at 30% 22%,
+      rgba(255,255,255,.95) 0%,
+      rgba(255,255,255,.30) 5%,
+      rgba(255,255,255,.06) 10%,
+      rgba(255,255,255,.015) 24%,
+      rgba(255,255,255,.008) 62%,
+      rgba(255,255,255,.04) 79%,
+      rgba(255,255,255,.16) 100%
+    );
+
+  border:1px solid rgba(255,255,255,.66);
+
+  box-shadow:
+    inset 5px 5px 14px rgba(255,255,255,.28),
+    inset -5px -5px 14px rgba(124,220,255,.045),
+    0 6px 20px rgba(80,140,170,.035);
+
+  opacity:.82;
+
+  backdrop-filter:blur(.35px);
+  -webkit-backdrop-filter:blur(.35px);
+
+  will-change:transform,filter;
+}
+
+/* тоненькая мыльная радужная пленка */
+
+.bubble::before{
+  content:"";
+  position:absolute;
+  inset:-1px;
+  border-radius:50%;
+
+  background:
+    conic-gradient(
+      from 20deg,
+      transparent 0deg,
+      rgba(119,228,255,.38) 45deg,
+      rgba(152,151,255,.24) 85deg,
+      rgba(255,169,229,.29) 135deg,
+      rgba(255,225,168,.25) 185deg,
+      rgba(123,230,255,.30) 230deg,
+      rgba(226,181,255,.18) 280deg,
+      transparent 360deg
+    );
+
+  -webkit-mask:
+    radial-gradient(
+      farthest-side,
+      transparent calc(100% - 4px),
+      #000 calc(100% - 2px)
+    );
+
+  mask:
+    radial-gradient(
+      farthest-side,
+      transparent calc(100% - 4px),
+      #000 calc(100% - 2px)
+    );
+
+  opacity:.72;
+}
+
+/* сияющий глянцевый блик */
+
+.bubble::after{
+  content:"";
+  position:absolute;
+  left:17%;
+  top:12%;
+  width:23%;
+  height:12%;
+
+  border-radius:50%;
+  transform:rotate(-30deg);
+
+  background:rgba(255,255,255,.94);
+
+  filter:blur(3px);
+
+  box-shadow:
+    0 0 7px rgba(255,255,255,.95),
+    0 0 15px rgba(255,255,255,.45);
+}
+
+/* размеры и позиции */
+
+.b1{
+  width:190px;
+  height:190px;
+  right:-25px;
+  top:10%;
+  animation:
+    float1 8.2s ease-in-out infinite alternate,
+    shine 3.3s ease-in-out infinite alternate;
+}
+
+.b2{
+  width:135px;
+  height:135px;
+  left:47%;
+  top:5%;
+  animation:
+    float2 7.5s ease-in-out infinite alternate,
+    shine 3.8s ease-in-out infinite alternate;
+}
+
+.b3{
+  width:112px;
+  height:112px;
+  left:51%;
+  bottom:13%;
+  animation:
+    float3 7.2s ease-in-out infinite alternate,
+    shine 3.2s ease-in-out infinite alternate;
+}
+
+.b4{
+  width:82px;
+  height:82px;
+  left:43%;
+  top:20%;
+  animation:
+    float4 6.5s ease-in-out infinite alternate,
+    shine 2.9s ease-in-out infinite alternate;
+}
+
+.b5{
+  width:66px;
+  height:66px;
+  right:37%;
+  top:35%;
+  animation:
+    float5 6s ease-in-out infinite alternate,
+    shine 3.4s ease-in-out infinite alternate;
+}
+
+.b6{
+  width:48px;
+  height:48px;
+  right:20%;
+  bottom:17%;
+  animation:
+    float6 5.6s ease-in-out infinite alternate,
+    shine 2.8s ease-in-out infinite alternate;
+}
+
+.b7{
+  width:34px;
+  height:34px;
+  left:56%;
+  top:29%;
+  animation:
+    float7 5.2s ease-in-out infinite alternate,
+    shine 2.6s ease-in-out infinite alternate;
+}
+
+/* заметно плавают, но не носятся */
+
+@keyframes float1{
+  from{
+    transform:translate3d(22px,65px,0) scale(.96);
+  }
+  to{
+    transform:translate3d(-95px,-100px,0) scale(1.04);
+  }
+}
+
+@keyframes float2{
+  from{
+    transform:translate3d(-25px,58px,0) scale(.97);
+  }
+  to{
+    transform:translate3d(75px,-95px,0) scale(1.035);
+  }
+}
+
+@keyframes float3{
+  from{
+    transform:translate3d(18px,45px,0);
+  }
+  to{
+    transform:translate3d(-65px,-92px,0);
+  }
+}
+
+@keyframes float4{
+  from{
+    transform:translate3d(-20px,40px,0);
+  }
+  to{
+    transform:translate3d(58px,-80px,0);
+  }
+}
+
+@keyframes float5{
+  from{
+    transform:translate3d(15px,32px,0);
+  }
+  to{
+    transform:translate3d(-43px,-72px,0);
+  }
+}
+
+@keyframes float6{
+  from{
+    transform:translate3d(-12px,25px,0);
+  }
+  to{
+    transform:translate3d(39px,-66px,0);
+  }
+}
+
+@keyframes float7{
+  from{
+    transform:translate3d(0,22px,0);
+  }
+  to{
+    transform:translate3d(33px,-58px,0);
+  }
+}
+
+@keyframes shine{
+  from{
+    filter:brightness(.98) saturate(.92);
+    opacity:.72;
+  }
+  to{
+    filter:brightness(1.12) saturate(1.12);
+    opacity:.90;
+  }
+}
+
+/* ========================================
+   МОБИЛЬНАЯ АДАПТАЦИЯ
+   ======================================== */
+
+@media(max-width:900px){
+
+  .hero{
+    min-height:760px;
+  }
+
+  .hero-bg{
+    background-position:67% center;
+  }
+
+  .left-light{
+    width:82%;
+    min-width:0;
+  }
+
+  .logo2k{
+    left:6vw;
+    top:4vh;
+    width:82px;
+  }
+
+  .category{
+    left:6vw;
+    top:30vh;
+    font-size:16px;
+    letter-spacing:.13em;
+  }
+
+  .title{
+    left:6vw;
+    top:38vh;
+    font-size:55px;
+  }
+
+  .ornament{
+    left:6vw;
+    top:49vh;
+    width:68vw;
+  }
+
+  .descriptor{
+    left:6vw;
+    top:53vh;
+    max-width:72vw;
+    white-space:normal;
+    font-size:13px;
+    line-height:1.5;
+  }
+
+  .brands{
+    left:6vw;
+    top:auto;
+    bottom:10vh;
+    gap:17px;
+  }
+
+  .brand-wrap{
+    height:50px;
+  }
+
+  .galax{height:37px;}
+  .washfree{height:43px;}
+  .prowash{height:41px;}
+
+  .brand-wrap + .brand-wrap::before{
+    display:none;
+  }
+
+  .scroll{
+    display:none;
+  }
+}
+
+</style>
 </head>
-
 
 <body>
 
-  <main class="hero" id="hero">
+<main class="hero" id="hero">
 
-    <div class="hero-photo"></div>
+  <div class="hero-bg"></div>
 
-    <div class="left-atmosphere"></div>
+  <div class="left-light"></div>
 
-    <div class="light-layer"></div>
+  <div class="light-sweep"></div>
 
+  <!-- только новые стеклянные движущиеся пузыри -->
+  <div class="bubble-field" id="bubbleField">
+    <div class="bubble b1"></div>
+    <div class="bubble b2"></div>
+    <div class="bubble b3"></div>
+    <div class="bubble b4"></div>
+    <div class="bubble b5"></div>
+    <div class="bubble b6"></div>
+    <div class="bubble b7"></div>
+  </div>
 
-    <div class="bubbles" id="bubbles">
+  <section class="content">
 
-      <div class="bubble b1"></div>
-      <div class="bubble b2"></div>
-      <div class="bubble b3"></div>
-      <div class="bubble b4"></div>
-      <div class="bubble b5"></div>
-      <div class="bubble b6"></div>
-      <div class="bubble b7"></div>
-      <div class="bubble b8"></div>
+    <img
+      class="logo2k"
+      src="assets/2K_logo%20(7).png"
+      alt="2K"
+    >
+
+    <div class="category">
+      <span>HOUSE CARE</span>
+      <span class="category-dot"></span>
+      <span>2026</span>
+    </div>
+
+    <h1 class="title">
+      НОВИНКИ
+    </h1>
+
+    <div class="ornament">
+      <span class="ornament-line"></span>
+      <span class="ornament-star">✦</span>
+      <span class="ornament-line"></span>
+    </div>
+
+    <div class="descriptor">
+      НОВІ ФОРМУЛИ. НОВІ АРОМАТИ. НОВІ РІШЕННЯ ДЛЯ ДОМУ.
+    </div>
+
+    <div class="brands">
+
+      <div class="brand-wrap">
+        <img
+          class="brand galax"
+          src="assets/galax-logo.png"
+          alt="GALAX"
+        >
+      </div>
+
+      <div class="brand-wrap">
+        <img
+          class="brand washfree"
+          src="assets/washfree-logo.png"
+          alt="WASH & FREE"
+        >
+      </div>
+
+      <div class="brand-wrap">
+        <img
+          class="brand prowash"
+          src="assets/prowash-logo-full.png"
+          alt="PRO WASH"
+        >
+      </div>
 
     </div>
 
+    <div class="scroll">
+      <span class="scroll-line"></span>
+      <span>ГОРТАЙТЕ НИЖЧЕ</span>
+    </div>
 
-    <span class="sparkle sp1"></span>
-    <span class="sparkle sp2"></span>
-    <span class="sparkle sp3"></span>
+  </section>
 
+</main>
 
-    <section class="content">
+<script>
+const hero = document.getElementById("hero");
+const bubbleField = document.getElementById("bubbleField");
 
-      <img
-        class="logo-2k"
-        src="assets/2K_logo%20(7).png"
-        alt="2K"
-      >
+hero.addEventListener("mousemove", (event) => {
+  const x = event.clientX / window.innerWidth - 0.5;
+  const y = event.clientY / window.innerHeight - 0.5;
 
+  bubbleField.style.transform =
+    `translate3d(${x * -18}px, ${y * -13}px, 0)`;
+});
 
-      <div class="category">
-
-        <span>HOUSE CARE</span>
-
-        <span class="category-dot"></span>
-
-        <span>2026</span>
-
-      </div>
-
-
-      <h1 class="title">
-        НОВИНКИ
-      </h1>
-
-
-      <div class="ornament">
-
-        <span class="ornament-line"></span>
-
-        <span class="ornament-star">
-          ✦
-        </span>
-
-        <span class="ornament-line"></span>
-
-      </div>
-
-
-      <div class="descriptor">
-        НОВІ ФОРМУЛИ. НОВІ АРОМАТИ. НОВІ РІШЕННЯ ДЛЯ ДОМУ.
-      </div>
-
-
-      <div class="brands">
-
-        <div class="brand-wrap">
-
-          <img
-            class="brand brand-galax"
-            src="assets/galax-logo.png"
-            alt="GALAX"
-          >
-
-        </div>
-
-
-        <div class="brand-wrap">
-
-          <img
-            class="brand brand-washfree"
-            src="assets/washfree-logo.png"
-            alt="WASH & FREE"
-          >
-
-        </div>
-
-
-        <div class="brand-wrap">
-
-          <img
-            class="brand brand-prowash"
-            src="assets/prowash-logo-full.png"
-            alt="PRO WASH"
-          >
-
-        </div>
-
-      </div>
-
-
-      <div class="scroll-hint">
-
-        <span class="scroll-line"></span>
-
-        <span>
-          ГОРТАЙТЕ НИЖЧЕ
-        </span>
-
-      </div>
-
-    </section>
-
-  </main>
-
-
-  <script>
-
-    const hero =
-      document.getElementById("hero");
-
-    const bubbles =
-      document.getElementById("bubbles");
-
-
-    hero.addEventListener(
-      "mousemove",
-      event => {
-
-        const x =
-          event.clientX /
-          window.innerWidth - .5;
-
-        const y =
-          event.clientY /
-          window.innerHeight - .5;
-
-
-        bubbles.style.transform =
-          `
-          translate3d(
-            ${x * -22}px,
-            ${y * -17}px,
-            0
-          )
-          `;
-      }
-    );
-
-
-    hero.addEventListener(
-      "mouseleave",
-      () => {
-
-        bubbles.style.transform =
-          "translate3d(0,0,0)";
-      }
-    );
-
-  </script>
+hero.addEventListener("mouseleave", () => {
+  bubbleField.style.transform = "translate3d(0,0,0)";
+});
+</script>
 
 </body>
 </html>
