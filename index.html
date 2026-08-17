@@ -40,7 +40,7 @@ body{
 }
 
 /* ========================================
-   УТВЕРЖДЕННЫЙ ЧИСТЫЙ ФОН
+   УТВЕРЖДЕННЫЙ ФОН
    ======================================== */
 
 .hero-bg{
@@ -59,7 +59,6 @@ body{
 }
 
 @keyframes bgBreath{
-
   from{
     transform:
       scale(1.02)
@@ -101,67 +100,11 @@ body{
 
 
 /* ========================================
-   МЯГКИЙ СВЕТ
+   НИКАКОГО ИСКУССТВЕННОГО ПРОЖЕКТОРА
    ======================================== */
 
 .light-sweep{
-  position:absolute;
-  inset:0;
-
-  z-index:3;
-
-  overflow:hidden;
-  pointer-events:none;
-
-  mix-blend-mode:screen;
-}
-
-.light-sweep::after{
-  content:"";
-
-  position:absolute;
-
-  width:40vw;
-  height:130vh;
-
-  left:45vw;
-  top:-20vh;
-
-  transform:rotate(8deg);
-
-  filter:blur(18px);
-
-  background:
-    linear-gradient(
-      112deg,
-      transparent 22%,
-      rgba(255,255,255,.04) 34%,
-      rgba(255,255,255,.32) 49%,
-      rgba(193,235,255,.12) 58%,
-      transparent 72%
-    );
-
-  animation:
-    lightMove 8s ease-in-out infinite alternate;
-}
-
-@keyframes lightMove{
-
-  from{
-    transform:
-      translateX(-7vw)
-      rotate(8deg);
-
-    opacity:.5;
-  }
-
-  to{
-    transform:
-      translateX(10vw)
-      rotate(8deg);
-
-    opacity:.95;
-  }
+  display:none;
 }
 
 
@@ -431,21 +374,18 @@ body{
 }
 
 @keyframes scrollMove{
-
   from{
-    transform:
-      translateX(-8px);
+    transform:translateX(-8px);
   }
 
   to{
-    transform:
-      translateX(33px);
+    transform:translateX(33px);
   }
 }
 
 
 /* ============================================================
-   ГЛАМУРНЫЕ ДВИЖУЩИЕСЯ ПУЗЫРИ
+   ГЛАМУРНЫЕ ПЛАВАЮЩИЕ ПУЗЫРИ
    ============================================================ */
 
 .bubble-field{
@@ -462,10 +402,8 @@ body{
 
 
 /*
-  Главное отличие:
-  НЕТ равномерного border.
-  НЕТ матового blur.
-  НЕТ голубой непрозрачной заливки.
+  Пузырь почти пустой внутри.
+  Основная красота — в радужной плёнке и бликах.
 */
 
 .bubble{
@@ -476,337 +414,347 @@ body{
   border:none;
 
   background:
-
-    /* верхний белый отблеск */
     radial-gradient(
-      circle at 28% 20%,
-      rgba(255,255,255,.95) 0%,
-      rgba(255,255,255,.26) 4%,
-      rgba(255,255,255,.045) 9%,
-      rgba(255,255,255,0) 20%
+      circle at 30% 23%,
+      rgba(255,255,255,.92) 0%,
+      rgba(255,255,255,.20) 5%,
+      rgba(255,255,255,.03) 10%,
+      transparent 19%
     ),
-
-    /* едва заметная розовая пленка */
     radial-gradient(
-      circle at 73% 76%,
-      rgba(255,157,224,.035) 0%,
-      rgba(255,157,224,0) 32%
+      circle at 74% 77%,
+      rgba(255,145,225,.055) 0%,
+      transparent 34%
     ),
-
-    /* едва заметная голубая пленка */
     radial-gradient(
-      circle at 20% 72%,
-      rgba(104,222,255,.035) 0%,
-      rgba(104,222,255,0) 31%
+      circle at 18% 72%,
+      rgba(86,223,255,.055) 0%,
+      transparent 31%
     );
 
+  opacity:.97;
+
   box-shadow:
-    inset 5px 4px 12px
-      rgba(255,255,255,.075),
-
-    inset -4px -5px 13px
-      rgba(126,218,255,.018);
-
-  opacity:.86;
-
-  backdrop-filter:none;
-  -webkit-backdrop-filter:none;
+    inset 7px 6px 16px rgba(255,255,255,.11),
+    inset -6px -5px 16px rgba(96,218,255,.025);
 
   will-change:
     transform,
-    filter,
-    opacity;
+    opacity,
+    filter;
 }
 
 
-/*
-  ФРАГМЕНТАРНАЯ радужная кромка.
-  Она специально НЕ выглядит
-  как нарисованная окружность.
-*/
+/* СИЛЬНО ЗАМЕТНЕЕ РАДУЖНАЯ ПЛЁНКА */
 
 .bubble::before{
   content:"";
 
   position:absolute;
-  inset:-1px;
+  inset:-2px;
 
   border-radius:50%;
 
   background:
     conic-gradient(
-      from 18deg,
+      from 12deg,
 
       transparent 0deg,
-      rgba(255,255,255,.06) 20deg,
 
-      rgba(106,226,255,.55) 43deg,
-      rgba(144,156,255,.20) 69deg,
+      rgba(255,255,255,.30) 12deg,
+      rgba(104,233,255,.78) 34deg,
+      rgba(126,158,255,.48) 59deg,
 
-      transparent 99deg,
+      transparent 89deg,
 
-      rgba(255,150,222,.36) 127deg,
-      rgba(255,224,155,.23) 158deg,
+      rgba(255,126,218,.62) 116deg,
+      rgba(255,210,129,.49) 145deg,
 
-      transparent 194deg,
+      transparent 181deg,
 
-      rgba(100,229,255,.38) 222deg,
+      rgba(84,230,255,.67) 212deg,
+      rgba(168,148,255,.38) 236deg,
 
-      transparent 258deg,
+      transparent 267deg,
 
-      rgba(235,173,255,.24) 291deg,
+      rgba(255,157,232,.52) 299deg,
 
-      transparent 329deg,
+      transparent 332deg,
 
-      rgba(255,255,255,.07) 360deg
+      rgba(255,255,255,.27) 360deg
     );
 
   -webkit-mask:
     radial-gradient(
       farthest-side,
-      transparent calc(100% - 3px),
-      #000 calc(100% - 1.7px)
+      transparent calc(100% - 5px),
+      #000 calc(100% - 2px)
     );
 
   mask:
     radial-gradient(
       farthest-side,
-      transparent calc(100% - 3px),
-      #000 calc(100% - 1.7px)
+      transparent calc(100% - 5px),
+      #000 calc(100% - 2px)
     );
-
-  opacity:.82;
 
   filter:
     drop-shadow(
-      0 0 2px
-      rgba(255,255,255,.55)
+      0 0 3px rgba(255,255,255,.70)
+    )
+    drop-shadow(
+      0 0 5px rgba(159,220,255,.18)
     );
 }
 
 
-/* СИЯЮЩИЙ БЛИК */
+/* ЯРКИЙ БЛИК НА ПУЗЫРЕ */
 
 .bubble::after{
   content:"";
 
   position:absolute;
 
-  left:16%;
-  top:11%;
+  left:15%;
+  top:10%;
 
-  width:19%;
-  height:10%;
+  width:24%;
+  height:12%;
 
   border-radius:50%;
 
   transform:
-    rotate(-31deg);
+    rotate(-32deg);
 
   background:
     radial-gradient(
       ellipse at center,
 
-      rgba(255,255,255,.98) 0%,
-
-      rgba(255,255,255,.62) 31%,
-
-      rgba(255,255,255,0) 76%
+      rgba(255,255,255,1) 0%,
+      rgba(255,255,255,.82) 24%,
+      rgba(255,255,255,.24) 54%,
+      transparent 78%
     );
 
   filter:
-    blur(1.4px);
+    blur(1px);
 
   box-shadow:
-    0 0 5px
-      rgba(255,255,255,.95),
-
-    0 0 12px
-      rgba(255,255,255,.40);
+    0 0 7px rgba(255,255,255,.95),
+    0 0 16px rgba(255,255,255,.52);
 }
 
 
 /* ========================================
-   РАЗМЕРЫ И ПОЗИЦИИ
+   БОЛЬШИЕ + СРЕДНИЕ + МЕЛКИЕ
    ======================================== */
 
 .b1{
-  width:190px;
-  height:190px;
+  width:225px;
+  height:225px;
 
-  right:-25px;
-  top:10%;
+  right:-45px;
+  top:8%;
 
   animation:
-    float1 8.2s ease-in-out infinite alternate,
-    shine 3.3s ease-in-out infinite alternate;
+    float1 8.5s ease-in-out infinite alternate,
+    shimmer 3.2s ease-in-out infinite alternate;
 }
 
 .b2{
-  width:135px;
-  height:135px;
+  width:168px;
+  height:168px;
 
   left:47%;
-  top:5%;
+  top:4%;
 
   animation:
-    float2 7.5s ease-in-out infinite alternate,
-    shine 3.8s ease-in-out infinite alternate;
+    float2 7.8s ease-in-out infinite alternate,
+    shimmer 3.7s ease-in-out infinite alternate;
 }
 
 .b3{
-  width:112px;
-  height:112px;
+  width:138px;
+  height:138px;
 
-  left:51%;
-  bottom:13%;
+  left:49%;
+  bottom:11%;
 
   animation:
-    float3 7.2s ease-in-out infinite alternate,
-    shine 3.2s ease-in-out infinite alternate;
+    float3 7.4s ease-in-out infinite alternate,
+    shimmer 3.1s ease-in-out infinite alternate;
 }
 
 .b4{
-  width:82px;
-  height:82px;
+  width:105px;
+  height:105px;
 
-  left:43%;
-  top:20%;
+  left:42%;
+  top:19%;
 
   animation:
     float4 6.5s ease-in-out infinite alternate,
-    shine 2.9s ease-in-out infinite alternate;
+    shimmer 2.9s ease-in-out infinite alternate;
 }
 
 .b5{
-  width:66px;
-  height:66px;
+  width:82px;
+  height:82px;
 
-  right:37%;
-  top:35%;
+  right:36%;
+  top:32%;
 
   animation:
     float5 6s ease-in-out infinite alternate,
-    shine 3.4s ease-in-out infinite alternate;
+    shimmer 3.4s ease-in-out infinite alternate;
 }
 
 .b6{
-  width:48px;
-  height:48px;
+  width:61px;
+  height:61px;
 
-  right:20%;
-  bottom:17%;
+  right:19%;
+  bottom:16%;
 
   animation:
-    float6 5.6s ease-in-out infinite alternate,
-    shine 2.8s ease-in-out infinite alternate;
+    float6 5.7s ease-in-out infinite alternate,
+    shimmer 2.8s ease-in-out infinite alternate;
 }
 
 .b7{
-  width:34px;
-  height:34px;
+  width:42px;
+  height:42px;
 
   left:56%;
-  top:29%;
+  top:27%;
 
   animation:
-    float7 5.2s ease-in-out infinite alternate,
-    shine 2.6s ease-in-out infinite alternate;
+    float7 5.3s ease-in-out infinite alternate,
+    shimmer 2.6s ease-in-out infinite alternate;
+}
+
+.b8{
+  width:32px;
+  height:32px;
+
+  right:13%;
+  top:8%;
+
+  animation:
+    float8 4.9s ease-in-out infinite alternate,
+    shimmer 2.5s ease-in-out infinite alternate;
+}
+
+.b9{
+  width:54px;
+  height:54px;
+
+  left:39%;
+  bottom:24%;
+
+  animation:
+    float9 5.9s ease-in-out infinite alternate,
+    shimmer 3s ease-in-out infinite alternate;
 }
 
 
 /* ========================================
-   ЗАМЕТНОЕ ПЛАВНОЕ ДВИЖЕНИЕ
+   ЗАМЕТНО ПЛАВАЮТ
    ======================================== */
 
 @keyframes float1{
-
   from{
     transform:
-      translate3d(22px,65px,0)
+      translate3d(28px,78px,0)
       scale(.96)
-      rotate(-2deg);
+      rotate(-3deg);
   }
 
   to{
     transform:
-      translate3d(-95px,-100px,0)
+      translate3d(-110px,-110px,0)
       scale(1.04)
-      rotate(4deg);
+      rotate(5deg);
   }
 }
 
 @keyframes float2{
-
   from{
     transform:
-      translate3d(-25px,58px,0)
+      translate3d(-28px,70px,0)
       scale(.97);
   }
 
   to{
     transform:
-      translate3d(75px,-95px,0)
-      scale(1.035);
+      translate3d(88px,-105px,0)
+      scale(1.045);
   }
 }
 
 @keyframes float3{
-
   from{
     transform:
-      translate3d(18px,45px,0)
+      translate3d(22px,55px,0)
       scale(.97);
   }
 
   to{
     transform:
-      translate3d(-65px,-92px,0)
+      translate3d(-78px,-100px,0)
       scale(1.04);
   }
 }
 
 @keyframes float4{
-
   from{
     transform:
-      translate3d(-20px,40px,0);
+      translate3d(-24px,45px,0);
   }
 
   to{
     transform:
-      translate3d(58px,-80px,0);
+      translate3d(68px,-88px,0);
   }
 }
 
 @keyframes float5{
-
   from{
     transform:
-      translate3d(15px,32px,0);
+      translate3d(20px,39px,0);
   }
 
   to{
     transform:
-      translate3d(-43px,-72px,0);
+      translate3d(-54px,-81px,0);
   }
 }
 
 @keyframes float6{
-
   from{
     transform:
-      translate3d(-12px,25px,0);
+      translate3d(-15px,31px,0);
   }
 
   to{
     transform:
-      translate3d(39px,-66px,0);
+      translate3d(48px,-73px,0);
   }
 }
 
 @keyframes float7{
+  from{
+    transform:
+      translate3d(0,28px,0);
+  }
 
+  to{
+    transform:
+      translate3d(40px,-65px,0);
+  }
+}
+
+@keyframes float8{
   from{
     transform:
       translate3d(0,22px,0);
@@ -814,29 +762,40 @@ body{
 
   to{
     transform:
-      translate3d(33px,-58px,0);
+      translate3d(-33px,-56px,0);
+  }
+}
+
+@keyframes float9{
+  from{
+    transform:
+      translate3d(-14px,33px,0);
+  }
+
+  to{
+    transform:
+      translate3d(49px,-71px,0);
   }
 }
 
 
-/* очень лёгкая игра радужной плёнки */
+/* слегка меняется сияние */
 
-@keyframes shine{
-
+@keyframes shimmer{
   from{
     filter:
-      brightness(.98)
-      saturate(.92);
+      brightness(.96)
+      saturate(.98);
 
-    opacity:.72;
+    opacity:.84;
   }
 
   to{
     filter:
-      brightness(1.12)
-      saturate(1.10);
+      brightness(1.17)
+      saturate(1.20);
 
-    opacity:.90;
+    opacity:1;
   }
 }
 
@@ -914,17 +873,9 @@ body{
     height:50px;
   }
 
-  .galax{
-    height:37px;
-  }
-
-  .washfree{
-    height:43px;
-  }
-
-  .prowash{
-    height:41px;
-  }
+  .galax{height:37px;}
+  .washfree{height:43px;}
+  .prowash{height:41px;}
 
   .brand-wrap + .brand-wrap::before{
     display:none;
@@ -933,6 +884,7 @@ body{
   .scroll{
     display:none;
   }
+
 }
 
 </style>
@@ -950,8 +902,6 @@ body{
   <div class="light-sweep"></div>
 
 
-  <!-- ДВИЖУЩИЕСЯ ГЛАМУРНЫЕ ПУЗЫРИ -->
-
   <div
     class="bubble-field"
     id="bubbleField"
@@ -964,6 +914,8 @@ body{
     <div class="bubble b5"></div>
     <div class="bubble b6"></div>
     <div class="bubble b7"></div>
+    <div class="bubble b8"></div>
+    <div class="bubble b9"></div>
 
   </div>
 
@@ -979,17 +931,13 @@ body{
 
     <div class="category">
 
-      <span>
-        HOUSE CARE
-      </span>
+      <span>HOUSE CARE</span>
 
       <span
         class="category-dot"
       ></span>
 
-      <span>
-        2026
-      </span>
+      <span>2026</span>
 
     </div>
 
@@ -1027,7 +975,6 @@ body{
 
     <div class="brands">
 
-
       <div class="brand-wrap">
 
         <img
@@ -1060,7 +1007,6 @@ body{
 
       </div>
 
-
     </div>
 
 
@@ -1092,21 +1038,21 @@ const bubbleField =
 
 hero.addEventListener(
   "mousemove",
-  (event) => {
+  event => {
 
     const x =
       event.clientX /
-      window.innerWidth - 0.5;
+      window.innerWidth - .5;
 
     const y =
       event.clientY /
-      window.innerHeight - 0.5;
+      window.innerHeight - .5;
 
 
     bubbleField.style.transform =
       `translate3d(
-        ${x * -18}px,
-        ${y * -13}px,
+        ${x * -20}px,
+        ${y * -15}px,
         0
       )`;
 
